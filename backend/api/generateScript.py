@@ -18,11 +18,8 @@ CORS(app)
 def generate_creative():
     sys_behavior = ""
     data = request.json
-    prompt_input = data['prompt']
-    print(prompt_input)
 
-    with open("backend/api/promptCreative.txt", "r", encoding="utf-8") as f:
-        gpt_prompt = f.read()
+    gpt_prompt = generate_creative_prompt(data)
 
     gpt_response = openai.ChatCompletion.create(
         model = MODEL_GPT,
@@ -32,14 +29,36 @@ def generate_creative():
         ],
         temperature = 0.7,
     )
-
     generated_creative = str(gpt_response['choices'][0]['message']['content'])
 
     print(generated_creative)
-
+    
     return make_response(
-        jsonify(message='CRIATIVO:', creative=generated_creative)
+        jsonify(message='CRIATIVO:', creative=gpt_prompt)
     )
+
+def generate_creative_prompt(data):
+    with open("backend/api/promptCreative/promptCreative1.txt", "r", encoding="utf-8") as f:
+        initial_prompt = f.read()
+
+    with open("backend/api/promptCreative/promptCreative2.txt", "r", encoding="utf-8") as f:
+        final_prompt = f.read()
+
+    product_name = f"- Nome do produto: {data['product_name']}"
+    public_target = f"- Nicho e Público-Alvo: {data['public_target']}"
+    pains = f"- Que Dor o publico tem: {data['pains']}"
+    needs = f"- Necessidade/Desejos do publico: {data['needs']}"
+    solution = f"- Como o produto resolve a dor:  {data['solution']}"
+    product_format = f"- Formato do produto:  {data['product_format']}"
+    diferential = f"- Diferencial: {data['diferential']}"
+    product_objectives = f"- Objetivos do produto:  {data['product_objectives']}"
+    price = f"- Preço da oferta: {data['price']}"
+
+    middle_prompt = product_name + "\n" + public_target + "\n" + pains + "\n" + needs + "\n" + solution + "\n" + product_format + "\n" + diferential + "\n" + product_objectives + "\n" + price
+
+    creative_prompt = initial_prompt + "\n" + middle_prompt + "\n" + final_prompt
+
+    return creative_prompt
 
 if __name__ == "__main__":
     app.run()
