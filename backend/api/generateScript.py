@@ -1,4 +1,5 @@
-from flask import Flask, make_response, jsonify, request
+from operator import ge
+from flask import Flask, make_response, jsonify, request, Response
 from flask_cors import CORS
 import openai
 import json
@@ -21,6 +22,8 @@ def generate_creative():
 
     gpt_prompt = generate_creative_prompt(data)
 
+    print(gpt_prompt)
+
     gpt_response = openai.ChatCompletion.create(
         model = MODEL_GPT,
         messages = [
@@ -28,37 +31,59 @@ def generate_creative():
             {"role": "user", "content": gpt_prompt}
         ],
         temperature = 0.7,
+        #stream = True,
     )
-    generated_creative = str(gpt_response['choices'][0]['message']['content'])
 
+    generated_creative = str(gpt_response['choices'][0]['message']['content'])
     print(generated_creative)
+    generated_creative = generated_creative.replace("\n", "<br>")
     
     return make_response(
-        jsonify(message='CRIATIVO:', creative=gpt_prompt)
+        jsonify(message='CRIATIVO:', creative=generated_creative)
     )
 
 def generate_creative_prompt(data):
-    with open("backend/api/promptCreative/promptCreative1.txt", "r", encoding="utf-8") as f:
-        initial_prompt = f.read()
+    with open("backend/api/promptCreative.txt", "r", encoding="utf-8") as f:
+        base_prompt = f.read()
 
-    with open("backend/api/promptCreative/promptCreative2.txt", "r", encoding="utf-8") as f:
-        final_prompt = f.read()
+    input_prompt = f"- Nome do produto: {data['product_name']}\n"
+    input_prompt = input_prompt + f"- Nicho e Público-Alvo: {data['public_target']}\n"
+    input_prompt = input_prompt + f"- Que Dor o publico tem: {data['pains']}\n"
+    input_prompt = input_prompt + f"- Necessidade/Desejos do publico: {data['needs']}\n"
+    input_prompt = input_prompt + f"- Como o produto resolve a dor:  {data['solution']}\n"
+    input_prompt = input_prompt + f"- Formato do produto:  {data['product_format']}\n"
+    input_prompt = input_prompt + f"- Diferencial: {data['diferential']}\n"
+    input_prompt = input_prompt + f"- Objetivos do produto:  {data['product_objectives']}\n"
+    input_prompt = input_prompt + f"- Preço da oferta: {data['price']}\n"
 
-    product_name = f"- Nome do produto: {data['product_name']}"
-    public_target = f"- Nicho e Público-Alvo: {data['public_target']}"
-    pains = f"- Que Dor o publico tem: {data['pains']}"
-    needs = f"- Necessidade/Desejos do publico: {data['needs']}"
-    solution = f"- Como o produto resolve a dor:  {data['solution']}"
-    product_format = f"- Formato do produto:  {data['product_format']}"
-    diferential = f"- Diferencial: {data['diferential']}"
-    product_objectives = f"- Objetivos do produto:  {data['product_objectives']}"
-    price = f"- Preço da oferta: {data['price']}"
-
-    middle_prompt = product_name + "\n" + public_target + "\n" + pains + "\n" + needs + "\n" + solution + "\n" + product_format + "\n" + diferential + "\n" + product_objectives + "\n" + price
-
-    creative_prompt = initial_prompt + "\n" + middle_prompt + "\n" + final_prompt
+    creative_prompt = base_prompt + input_prompt
 
     return creative_prompt
+
+@app.route('/generate-creative/streaming', methods=['POST'])
+def generate_creative_stream():
+    data = request.json
+    gpt_response = openai.ChatCompletion.create(
+        model = MODEL_GPT,
+        messages = [
+            #{"role": "system", "content": sys_behavior},
+            {"role": "user", "content": data['prompt']}
+        ],
+        temperature = 0.7,
+        stream = True,
+    )
+
+    def generate_stream():
+        with app.app_context():
+            yield '{"message": "CRIATIVO:"}\n'
+            for chunk in gpt_response:
+                if (chunk['choices'][0]['delta'] != {}):
+                    print(chunk['choices'][0]['delta']['content'], end='')
+                    yield (json.dumps({"creative": chunk['choices'][0]['delta']['content']}))
+            yield '\n'
+            print("")
+
+    return Response(generate_stream(), content_type='text/plain')
 
 if __name__ == "__main__":
     app.run()
