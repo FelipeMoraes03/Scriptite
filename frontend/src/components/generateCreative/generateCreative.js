@@ -3,50 +3,51 @@ import axios from 'axios';
 import './generateCreative.css';
 
 function Main() {
-  const [keyWordInput, setKeyWordInput] = useState(["", "", "", "", "", "", "", "", ""]);
-  const [creative, setCreative] = useState("O criativo será mostrado aqui!!!")
+    const [keyWordInput, setKeyWordInput] = useState(["", "", "", "", "", "", "", "", ""]);
+    const [creative, setCreative] = useState("O criativo será mostrado aqui!!!")
 
-  return (
-      <main className='flex flex-line items-center justify-center space-x-40 mt-20'>
-            <div className='flex flex-col items-center justify-center'>
-              <KeyWord numInput={1} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Nome Produto"} />
-              <KeyWord numInput={2} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Publico Alvo"} />
-              <KeyWord numInput={3} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Dores"} />
-              <KeyWord numInput={4} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Necessidades"} />
-              <KeyWord numInput={5} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Solucao"} />
-              <KeyWord numInput={6} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Formato Produto"} />
-              <KeyWord numInput={7} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Diferencial Produto"} />
-              <KeyWord numInput={8} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Objetivos Produto"} />
-              <KeyWord numInput={9} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Preco Porduto"} />
-              <GenerateButton input={keyWordInput} setKeyWord={setKeyWordInput} setCreative={setCreative}/>
-          </div>
-          <div className='flex flex-col items-center content-center'>
-            <ShowCreative text={creative}/>
-          </div>
-      </main>
-  );
+    return (
+        <main className='flex flex-line items-center justify-center space-x-40 mt-20'>
+                <div className='flex flex-col items-center justify-center'>
+                <KeyWord numInput={1} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Nome Produto"} />
+                <KeyWord numInput={2} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Publico Alvo"} />
+                <KeyWord numInput={3} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Dores"} />
+                <KeyWord numInput={4} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Necessidades"} />
+                <KeyWord numInput={5} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Solucao"} />
+                <KeyWord numInput={6} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Formato Produto"} />
+                <KeyWord numInput={7} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Diferencial Produto"} />
+                <KeyWord numInput={8} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Objetivos Produto"} />
+                <KeyWord numInput={9} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Preco Porduto"} />
+                <GenerateButton input={keyWordInput} setKeyWord={setKeyWordInput} setCreative={setCreative} text={"GERAR CRIATIVO"}/>
+            </div>
+            <div className='flex flex-col items-center content-center'>
+                <ShowCreative text={creative}/>
+                <GenerateButton input={keyWordInput} setKeyWord={setKeyWordInput} setCreative={setCreative} text={"PRÓXIMO"}/>
+            </div>
+        </main>
+    );
 }
 export default Main;
 
 function KeyWord(props) {
-  return (
-      <keyword className='flex flex-line pb-3 justify-end items-center'>
-          <num className='pr-3 text-2xl'>{props.numInput}.</num>
-          <input type="text" name="inputKeyword" id="inputKeyword"
-              className="block rounded-md py-2 pr-20 sm:text-sm inputLabel"
-              placeholder={props.placeholderInput}
-              value={props.input[props.numInput-1]}
-              onChange={(e) => props.setKeyWord(
-                  props.input.map((inputKeyWord, index) => {
-                      if (index === props.numInput-1) {
-                          return e.target.value;
-                      }
-                      return inputKeyWord;
-                  })
-              )}
-          />
-      </keyword>
-  );
+    return (
+        <keyword className='flex flex-line pb-3 justify-end items-center'>
+            <num className='pr-3 text-2xl'>{props.numInput}.</num>
+            <input type="text" name="inputKeyword" id="inputKeyword"
+                className="block rounded-md py-2 pr-20 sm:text-sm inputLabel"
+                placeholder={props.placeholderInput}
+                value={props.input[props.numInput-1]}
+                onChange={(e) => props.setKeyWord(
+                    props.input.map((inputKeyWord, index) => {
+                        if (index === props.numInput-1) {
+                            return e.target.value;
+                        }
+                        return inputKeyWord;
+                    })
+                )}
+            />
+        </keyword>
+    );
 }
 
 function GenerateButton(props) {  
@@ -97,7 +98,7 @@ function GenerateButton(props) {
 
     return(
         <generate>
-            <button className='button-home' onClick={generateCreativeClick}>GERAR CRIATIVO</button>
+            <button className='button-home' onClick={generateCreativeClick}>{props.text}</button>
             <div>{props.creative}</div>
         </generate>
     );

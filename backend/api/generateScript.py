@@ -85,5 +85,42 @@ def generate_creative_stream():
 
     return Response(generate_stream(), content_type='text/plain')
 
+@app.route('/generate-script', methods=['POST'])
+def generate_script():
+    sys_behavior = ""
+    data = request.json
+
+    gpt_prompt = generate_script_prompt(data)
+
+    print(gpt_prompt)
+
+    gpt_response = openai.ChatCompletion.create(
+        model = MODEL_GPT,
+        messages = [
+            #{"role": "system", "content": sys_behavior},
+            {"role": "user", "content": gpt_prompt}
+        ],
+        temperature = 0.7,
+        #stream = True,
+    )
+
+    generated_script = str(gpt_response['choices'][0]['message']['content'])
+    print(generated_script)
+    generated_script = generated_script.replace("\n", "<br>")
+    
+    return make_response(
+        jsonify(message='CRIATIVO:', script=generated_script)
+    )
+
+def generate_script_prompt(data):
+    with open("backend/api/promptScript.txt", "r", encoding="utf-8") as f:
+        base_prompt = f.read()
+
+    script_prompt = base_prompt + data['creative']
+
+    return script_prompt
+
+
+
 if __name__ == "__main__":
     app.run()
