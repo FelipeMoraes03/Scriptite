@@ -41,4 +41,5 @@
     justify-content: center;
     width: 800px;
     height: 500px;
+    overflow: auto;
 }

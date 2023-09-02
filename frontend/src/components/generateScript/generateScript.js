@@ -4,15 +4,14 @@ import axios from 'axios';
 import './generateScript.css';
 
 function Main() {
-    const [keyWordInput, setKeyWordInput] = useState(["", "", "", "", "", "", "", "", ""]);
-    const [script, setScript] = useState("")
-    const creative = "O criativo será mostrado aqui"
+    const [creative, setCreative] = useState("");
+    const [script, setScript] = useState("");
 
     return (
         <main className='flex flex-line items-center justify-center space-x-20 mt-20'>
             <div className='flex flex-col items-center content-center'>
-                <ShowScript text={creative}/>
-                <GenerateButton input={keyWordInput} setKeyWord={setKeyWordInput} setScript={setScript} text={"GERAR SCRIPT"}/>
+                <ShowCreative creative={creative} setCreative={setCreative}/>
+                <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"}/>
             </div>
             <div className='flex flex-col items-center content-center'>
                 <ShowScript text={script === "" ? "O script será mostrado aqui" : script}/>
@@ -26,8 +25,8 @@ export default Main;
 function GenerateButton(props) {  
     const generateScriptClick = async () => {
         try{
-            const res = await axios.post("http://localhost:5000/generate-script", {
-                "creative": props.input[0]
+            const res = await axios.post("http://localhost:5000/script", {
+                "creative": props.input
             });
 
             if (res.status === 200) {
@@ -36,7 +35,6 @@ function GenerateButton(props) {
                 script = script.substring(1, script.length - 1);
 
                 props.setScript(script)
-                //props.setKeyWord(["", "", "", "", "", "", "", "", ""]);
             }
             else {
                 alert("ERROR: " + res.status);
@@ -56,17 +54,32 @@ function GenerateButton(props) {
     );
 }
 
-function NavigateStoryBoard(props) {
+function ShowCreative(props) {
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/creative");
+                let creativeAux = JSON.stringify(res.data.creative)
+                creativeAux = creativeAux.substring(1, creativeAux.length - 1);
+                props.setCreative(creativeAux);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
+        fetchData();
+    }, []);
+
+    return (
+        <p className='showScript' dangerouslySetInnerHTML={{ __html: props.creative }}></p>
+    );
 }
 
 function ShowScript(props) {
-    const textWithLineBreaks = props.text;
+    const script = props.text;
     
     return (
-
-        <p className='showScript' dangerouslySetInnerHTML={{ __html: textWithLineBreaks }}></p>
-
+        <p className='showScript' dangerouslySetInnerHTML={{ __html: script }}></p>
     );
 }
 

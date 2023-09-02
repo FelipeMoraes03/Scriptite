@@ -58,7 +58,7 @@ function GenerateButton(props) {
         }
         else {
             try{
-                const res = await axios.post("http://localhost:5000/generate-creative", {
+                const res = await axios.post("http://localhost:5000/creative", {
                     "product_name": props.input[0],
                     "public_target": props.input[1],
                     "pains": props.input[2],
@@ -106,11 +106,11 @@ function GenerateButton(props) {
 }
 
 function ShowCreative(props) {
-    const textWithLineBreaks = props.text;
+    const creative = props.text;
     
     return (
         <creative>
-          <p className='showCreative' dangerouslySetInnerHTML={{ __html: textWithLineBreaks }}></p>
+          <p className='showCreative' dangerouslySetInnerHTML={{ __html: creative }}></p>
         </creative>
     );
 }
