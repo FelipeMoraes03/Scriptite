@@ -5,7 +5,7 @@ import './generateCreative.css';
 
 function Main() {
     const [keyWordInput, setKeyWordInput] = useState(["", "", "", "", "", "", "", "", ""]);
-    const [creative, setCreative] = useState("O criativo será mostrado aqui!!!")
+    const [creative, setCreative] = useState("")
 
     return (
         <main className='flex flex-line items-center justify-center space-x-40 mt-20'>
@@ -22,8 +22,8 @@ function Main() {
                 <GenerateButton input={keyWordInput} setKeyWord={setKeyWordInput} setCreative={setCreative} text={"GERAR CRIATIVO"}/>
             </div>
             <div className='flex flex-col items-center content-center'>
-                <ShowCreative text={creative}/>
-                <ScriptPageButton text={"PRÓXIMO"}/>
+                <ShowCreative text={creative === "" ? "O criativo será mostrado aqui" : creative}/>
+                <ScriptPageButton creative={creative} text={"PRÓXIMO"}/>
             </div>
         </main>
     );
@@ -116,11 +116,21 @@ function ShowCreative(props) {
 }
 
 function ScriptPageButton(props) {
+    const scriptClick = async () => {
+        if (props.creative === "") {
+            alert("É necessário gerar um criativo antes de avançar");
+        }
+    }
+
     return (
-        <next> 
-            <Link to={`/script`}>
-                <button className='button-home'>{props.text}</button>  
-            </Link>
+        <next>
+            {props.creative === "" ? (
+                <button className='button-home' onClick={scriptClick}>{props.text}</button>
+            ) : (
+                <Link to={`/script`}>
+                    <button className='button-home'>{props.text}</button>
+                </Link>
+            )}
         </next>
     );
 }

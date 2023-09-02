@@ -5,7 +5,7 @@ import './generateScript.css';
 
 function Main() {
     const [keyWordInput, setKeyWordInput] = useState(["", "", "", "", "", "", "", "", ""]);
-    const [script, setScript] = useState("O scrpit será mostrado aqui!!!")
+    const [script, setScript] = useState("")
     const creative = "O criativo será mostrado aqui"
 
     return (
@@ -15,8 +15,8 @@ function Main() {
                 <GenerateButton input={keyWordInput} setKeyWord={setKeyWordInput} setScript={setScript} text={"GERAR SCRIPT"}/>
             </div>
             <div className='flex flex-col items-center content-center'>
-                <ShowScript text={script}/>
-                <StoryBoardPageButton text={"PRÓXIMO"}/>
+                <ShowScript text={script === "" ? "O script será mostrado aqui" : script}/>
+                <StoryBoardPageButton script={script} text={"PRÓXIMO"}/>
             </div>
         </main>
     );
@@ -71,11 +71,21 @@ function ShowScript(props) {
 }
 
 function StoryBoardPageButton(props) {
+    const storyBoardClick = async () => {
+        if (props.script === "") {
+            alert("É necessário gerar um script antes de avançar");
+        }
+    }
+
     return (
-        <next> 
-            <Link to={`/story-board`}>
-                <button className='button-home'>{props.text}</button>  
-            </Link>
+        <next>
+            {props.script === "" ? (
+                <button className='button-home' onClick={storyBoardClick}>{props.text}</button>
+            ) : (
+                <Link to={`/story-board`}>
+                    <button className='button-home'>{props.text}</button>
+                </Link>
+            )}
         </next>
     );
 }
