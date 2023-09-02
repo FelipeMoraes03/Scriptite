@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './generateCreative.css';
 
@@ -8,7 +9,7 @@ function Main() {
 
     return (
         <main className='flex flex-line items-center justify-center space-x-40 mt-20'>
-                <div className='flex flex-col items-center justify-center'>
+            <div className='flex flex-col items-center justify-center'>
                 <KeyWord numInput={1} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Nome Produto"} />
                 <KeyWord numInput={2} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Publico Alvo"} />
                 <KeyWord numInput={3} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Dores"} />
@@ -22,7 +23,7 @@ function Main() {
             </div>
             <div className='flex flex-col items-center content-center'>
                 <ShowCreative text={creative}/>
-                <GenerateButton input={keyWordInput} setKeyWord={setKeyWordInput} setCreative={setCreative} text={"PRÓXIMO"}/>
+                <ScriptPageButton text={"PRÓXIMO"}/>
             </div>
         </main>
     );
@@ -96,7 +97,7 @@ function GenerateButton(props) {
         }
     }
 
-    return(
+    return (
         <generate>
             <button className='button-home' onClick={generateCreativeClick}>{props.text}</button>
             <div>{props.creative}</div>
@@ -111,5 +112,15 @@ function ShowCreative(props) {
         <creative>
           <p className='showCreative' dangerouslySetInnerHTML={{ __html: textWithLineBreaks }}></p>
         </creative>
+    );
+}
+
+function ScriptPageButton(props) {
+    return (
+        <next> 
+            <Link to={`/script`}>
+                <button className='button-home'>{props.text}</button>  
+            </Link>
+        </next>
     );
 }

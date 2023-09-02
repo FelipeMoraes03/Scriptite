@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './generateScript.css';
 
@@ -15,7 +16,7 @@ function Main() {
             </div>
             <div className='flex flex-col items-center content-center'>
                 <ShowScript text={script}/>
-                <GenerateButton input={keyWordInput} setKeyWord={setKeyWordInput} setScript={setScript} text={"PRÓXIMO"}/>
+                <StoryBoardPageButton text={"PRÓXIMO"}/>
             </div>
         </main>
     );
@@ -47,7 +48,7 @@ function GenerateButton(props) {
         }
     }
 
-    return(
+    return (
         <generate>
             <button className='button-home' onClick={generateScriptClick}>{props.text}</button>
             <div>{props.script}</div>
@@ -66,5 +67,15 @@ function ShowScript(props) {
 
         <p className='showScript' dangerouslySetInnerHTML={{ __html: textWithLineBreaks }}></p>
 
+    );
+}
+
+function StoryBoardPageButton(props) {
+    return (
+        <next> 
+            <Link to={`/story-board`}>
+                <button className='button-home'>{props.text}</button>  
+            </Link>
+        </next>
     );
 }
