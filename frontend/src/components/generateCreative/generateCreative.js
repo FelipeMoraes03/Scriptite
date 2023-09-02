@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import io from 'socket.io-client';
 import './generateCreative.css';
+
+const socket = io('http://localhost:5001');
 
 function Main() {
     const [keyWordInput, setKeyWordInput] = useState(["", "", "", "", "", "", "", "", ""]);
@@ -22,7 +25,7 @@ function Main() {
                 <GenerateButton input={keyWordInput} setKeyWord={setKeyWordInput} setCreative={setCreative} text={"GERAR CRIATIVO"}/>
             </div>
             <div className='flex flex-col items-center content-center'>
-                <ShowCreative text={creative === "" ? "O criativo será mostrado aqui" : creative}/>
+                <ShowCreative text={creative}/>
                 <ScriptPageButton creative={creative} text={"PRÓXIMO"}/>
             </div>
         </main>
@@ -51,46 +54,32 @@ function KeyWord(props) {
     );
 }
 
-function GenerateButton(props) {  
-    const generateCreativeClick = async () => {
+function GenerateButton(props) {
+    let updatedCreative = ""
+    async function generateCreativeClick() {
         if (props.input.includes("")) {
             alert("Todos as palavras chaves precisam ser definidas");
-        }
-        else {
-            try{
-                const res = await axios.post("http://localhost:5000/creative", {
-                    "product_name": props.input[0],
-                    "public_target": props.input[1],
-                    "pains": props.input[2],
-                    "needs": props.input[3],
-                    "solution": props.input[4],
-                    "product_format": props.input[5],
-                    "diferential": props.input[6],
-                    "product_objectives": props.input[7],
-                    "price": props.input[8]
-                }/*, {
-                    responseType: 'stream',
-                }*/);
+        } else {
+            try {
+                socket.emit('generate_creative', {
+                    product_name: props.input[0],
+                    public_target: props.input[1],
+                    pains: props.input[2],
+                    needs: props.input[3],
+                    solution: props.input[4],
+                    product_format: props.input[5],
+                    diferential: props.input[6],
+                    product_objectives: props.input[7],
+                    price: props.input[8],
+                });
 
-                /*let aux = "";
-                for await (const chunk of res) {
-                    aux += chunk.data.creative
-                    props.setCreative(aux)
-                }*/
+                socket.on('creative_chunk', (chunk) => {
+                    updatedCreative = updatedCreative + chunk.creative;
+                    const formattedCreative = updatedCreative.replace(/\n/g, "<br />");
+                    props.setCreative(formattedCreative);
+                });
 
-                if (res.status === 200) {
-                    let creative = JSON.stringify(res.data.creative)
-
-                    creative = creative.substring(1, creative.length - 1);
-
-                    props.setCreative(creative)
-                    //props.setKeyWord(["", "", "", "", "", "", "", "", ""]);
-                }
-                else {
-                    alert("ERROR: " + res.status);
-                }
-            }
-            catch (err) {
+            } catch (err) {
                 console.error(err);
                 alert(err);
             }

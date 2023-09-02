@@ -1,6 +1,8 @@
 from operator import ge
 from flask import Flask, make_response, jsonify, request, Response
 from flask_cors import CORS
+from flask_socketio import SocketIO
+import threading
 import openai
 import json
 
@@ -12,6 +14,7 @@ openai.api_key = credentials['openai_api_key']
 openai.Model.list()
 
 app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins="http://localhost:3000")
 app.json.sort_keys = False
 CORS(app)
 
@@ -21,34 +24,40 @@ content_cache = {
     "story_board": ""
 }
 
-@app.route('/creative', methods=['POST'])
-def generate_creative():
-    sys_behavior = ""
-    data = request.json
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
 
-    gpt_prompt = generate_creative_prompt(data)
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
 
-    print(gpt_prompt)
+@socketio.on('generate_creative')
+def generate_creative_stream(data):
+    prompt = generate_creative_prompt(data)
 
     gpt_response = openai.ChatCompletion.create(
-        model = MODEL_GPT,
-        messages = [
-            #{"role": "system", "content": sys_behavior},
-            {"role": "user", "content": gpt_prompt}
+        model=MODEL_GPT,
+        messages=[
+            {"role": "user", "content": prompt}
         ],
-        temperature = 0.7,
-        #stream = True,
+        temperature=0.7,
+        stream=True,
     )
 
-    generated_creative = str(gpt_response['choices'][0]['message']['content'])
-    content_cache['creative'] = generated_creative
-    generated_creative = generated_creative.replace("\\", "")
-    print(generated_creative)
-    generated_creative = generated_creative.replace("\n", "<br>")
-    
-    return make_response(
-        jsonify(message='CRIATIVO:', creative=generated_creative)
-    )
+    def generate_stream():
+        generated_creative = ""
+        with app.app_context():
+            for chunk in gpt_response:
+                if chunk['choices'][0]['delta'] != {}:
+                    creative_chunk = chunk['choices'][0]['delta']['content']
+                    socketio.emit('creative_chunk', {"creative": creative_chunk})
+                    generated_creative += creative_chunk
+            socketio.emit('creative_streaming_complete')
+
+        content_cache['creative'] = generated_creative
+
+    threading.Thread(target=generate_stream).start()
 
 def generate_creative_prompt(data):
     with open("backend/api/promptCreative.txt", "r", encoding="utf-8") as f:
@@ -74,35 +83,32 @@ def get_creative():
         jsonify(creative=(content_cache['creative']).replace("\n", "<br>"))
     )
 
-@app.route('/script', methods=['POST'])
-def generate_script():
-    sys_behavior = ""
-    data = request.json
-
-    gpt_prompt = generate_script_prompt(data)
-
-    print(gpt_prompt)
-
-    gpt_response = openai.ChatCompletion.create(
-        model = MODEL_GPT,
-        messages = [
-            #{"role": "system", "content": sys_behavior},
-            {"role": "user", "content": gpt_prompt}
-        ],
-        temperature = 0.7,
-        #stream = True,
-    )
-
-    generated_script = str(gpt_response['choices'][0]['message']['content'])
-    generated_script = generated_script.replace("\\", "")
-    print(generated_script)
-    generated_script = generated_script.replace("\n", "<br>")
-
-    content_cache['script'] = generated_script
+@socketio.on('generate_script')
+def generate_cript_stream(data):
+    prompt = generate_script_prompt(data)
     
-    return make_response(
-        jsonify(message='CRIATIVO:', script=generated_script)
+    gpt_response = openai.ChatCompletion.create(
+        model=MODEL_GPT,
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.7,
+        stream=True,
     )
+
+    def generate_stream():
+        generated_script = ""
+        with app.app_context():
+            for chunk in gpt_response:
+                if chunk['choices'][0]['delta'] != {}:
+                    script_chunk = chunk['choices'][0]['delta']['content']
+                    socketio.emit('script_chunk', {"script": script_chunk})
+                    generated_script += script_chunk
+            socketio.emit('script_streaming_complete')
+
+        content_cache['script'] = generated_script
+
+    threading.Thread(target=generate_stream).start()
 
 def generate_script_prompt(data):
     with open("backend/api/promptScript.txt", "r", encoding="utf-8") as f:
@@ -118,30 +124,5 @@ def get_script():
         jsonify(script=(content_cache['script']).replace("\n", "<br>"))
     )
 
-"""@app.route('/creative/streaming', methods=['POST'])
-def generate_creative_stream():
-    data = request.json
-    gpt_response = openai.ChatCompletion.create(
-        model = MODEL_GPT,
-        messages = [
-            #{"role": "system", "content": sys_behavior},
-            {"role": "user", "content": data['prompt']}
-        ],
-        temperature = 0.7,
-        stream = True,
-    )
-
-    def generate_stream():
-        with app.app_context():
-            yield '{"message": "CRIATIVO:"}\n'
-            for chunk in gpt_response:
-                if (chunk['choices'][0]['delta'] != {}):
-                    print(chunk['choices'][0]['delta']['content'], end='')
-                    yield (json.dumps({"creative": chunk['choices'][0]['delta']['content']}))
-            yield '\n'
-            print("")
-
-    return Response(generate_stream(), content_type='text/plain')"""
-
 if __name__ == "__main__":
-    app.run()
+    socketio.run(app, host="localhost", port=5001, debug=True)
