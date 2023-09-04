@@ -11,6 +11,6 @@ Posicionamento: Reel, stories, video feed
 
 Número de cenas: número de cenas no video, escolhido apartir do tempo do video, o video de 1 cena é um video praticamente sem cortes, corrido, pode ter até 4 cenas diferentes. 
 
-Detalhes das cenas: para Cada cena de os detalhes dela, que são um tempo de duração, objetivo geral, local ( que pode se repetir ), ideia principal da cena, falas principais da cena ( para isso siga o “tipo de copy” do criativo”)
+Detalhes das cenas: para Cada cena dê os detalhes dela, que são o tempo de duração, objetivo geral, local ( que pode se repetir ), ideia principal da cena, falas principais da cena ( para isso siga o “tipo de copy” do criativo”)
 
 Com base no texto a seguir:
