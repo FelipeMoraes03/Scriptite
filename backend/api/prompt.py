@@ -80,7 +80,7 @@ O PRODUTO SERA DEMOSTRADO AGORA PELO O USUARIO
 
 """
 
-PROMTP_SCRIPT = """
+PROMPT_SCRIPT = """
 Você é um copywriter senior numa empresa que precisa criar criativos para vender no meta ads.
 
 Crie um roteiro de criativo seguindo a seguinte formula:
@@ -101,11 +101,23 @@ Com base no texto a seguir:
 """
 
 PROMPT_STORY_BOARD = """
-Crie um Dall-E prompt com vários adjetivos, no final sempre deixe o texto “rough sketch art, storyboard style, minimalistic, colored”.
+PARA CADA CENA DADA NA DESCRIÇÃO
+
+Crie um Dall-E prompt com vários adjetivos. 
+
+No final de cada prompt sempre deixe o texto “rough sketch art, storyboard style, minimalistic, colored”.
 
 Escreva tudo em inglês.
 
 Não escreva frases nem “vozes” nem “falas” no prompt.
 
+Siga o formato do exemplo abaixo:
+PROMPT SCENE 1: "Cluttered fashion store interior, messy stacks of clothes, dim lighting, barren cash register, distraught and burdened store owner examining dismal sales on a smartphone, rough sketch art, storyboard style, minimalistic."
+
+PROMPT SCENE 2: "Rustic coffee shop interior, warm wooden decor, cozy corner with an overstuffed armchair, soft jazz music in the background, a steaming cup of artisanal coffee on a vintage saucer, and a book with well-worn pages open to a captivating story, sketch art, storyboard style, minimalistic."
+
+PROMPT SCENE 3: "Close-up of optimistic shopkeeper's face, radiant smile, assured eyes, holding a tablet with Prepi app displayed, ambient lighting highlighting positive change. rough sketch art, storyboard style, minimalistic, colored."
+
 Com base na descrição a seguir:
+
 """

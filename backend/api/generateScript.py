@@ -83,7 +83,7 @@ def get_creative():
 
 @socketio.on('generate_script')
 def generate_cript_stream(data):
-    prompt = generate_script_prompt(data)
+    prompt = PROMPT_SCRIPT + data['creative']
     
     gpt_response = openai.ChatCompletion.create(
         model=MODEL_GPT,
@@ -108,16 +108,60 @@ def generate_cript_stream(data):
 
     threading.Thread(target=generate_stream).start()
 
-def generate_script_prompt(data):
-    script_prompt = PROMPT_SCRIPT + data['creative']
-
-    return script_prompt
-
 @app.route('/script', methods=['GET'])
 def get_script():
     return make_response(
         jsonify(script=(content_cache['script']).replace("\n", "<br>"))
     )
+
+@socketio.on('story_board')
+def generate_scene_prompt(data):
+    prompt = PROMPT_STORY_BOARD + data['script']
+
+    gpt_response = openai.ChatCompletion.create(
+        model=MODEL_GPT,
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.7,
+        stream=True,
+    )
+
+    def generate_stream():
+        generated_story_board = ""
+        with app.app_context():
+            for chunk in gpt_response:
+                if chunk['choices'][0]['delta'] != {}:
+                    story_board_chunk = chunk['choices'][0]['delta']['content']
+                    socketio.emit('story_board_chunk', {"story_board": story_board_chunk})
+                    generated_story_board += story_board_chunk
+            socketio.emit('story_board_streaming_complete')
+
+    threading.Thread(target=generate_stream).start()
+
+@app.route('/story-board', methods=['POST'])
+def generate_scene_image():
+    data = request.json
+    prompt = data['scene']
+
+    return make_response(
+        jsonify(scene=(prompt.replace("\n", "<br>")))
+    )
+
+    """response = openai.Image.create(
+        prompt = prompt,
+
+        n = 1,
+
+        size = "1024x1024"
+    )
+    image_url = response['data'][0]['url']
+
+    print(image_url)
+
+    return make_response(
+        jsonify(scene=image_url)
+    )"""
 
 if __name__ == "__main__":
     socketio.run(app, host="localhost", port=5001, debug=True)

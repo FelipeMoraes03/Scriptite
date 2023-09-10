@@ -27,7 +27,7 @@ export default Main;
 
 function GenerateButton(props) {  
     let updatedScript = ""
-    async function generateCreativeClick() {
+    async function generateScriptClick() {
         try {
             socket.emit('generate_script', {
                 creative: props.input,
@@ -47,7 +47,7 @@ function GenerateButton(props) {
 
     return (
         <generate>
-            <button className='button-home' onClick={generateCreativeClick}>{props.text}</button>
+            <button className='button-home' onClick={generateScriptClick}>{props.text}</button>
             <div>{props.creative}</div>
         </generate>
     );
