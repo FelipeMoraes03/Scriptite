@@ -1,10 +1,11 @@
-from operator import ge
 from flask import Flask, make_response, jsonify, request, Response
 from flask_cors import CORS
 from flask_socketio import SocketIO
 import threading
 import openai
 import json
+
+from prompt import PROMPT_CREATIVE, PROMPT_SCRIPT, PROMPT_STORY_BOARD
 
 MODEL_GPT = 'gpt-4'
 with open('backend/credentials.json', 'r') as f:
@@ -60,9 +61,6 @@ def generate_creative_stream(data):
     threading.Thread(target=generate_stream).start()
 
 def generate_creative_prompt(data):
-    with open("backend/api/promptCreative.txt", "r", encoding="utf-8") as f:
-        base_prompt = f.read()
-
     input_prompt = f"- Nome do produto: {data['product_name']}\n"
     input_prompt = input_prompt + f"- Nicho e Público-Alvo: {data['public_target']}\n"
     input_prompt = input_prompt + f"- Que Dor o publico tem: {data['pains']}\n"
@@ -73,7 +71,7 @@ def generate_creative_prompt(data):
     input_prompt = input_prompt + f"- Objetivos do produto:  {data['product_objectives']}\n"
     input_prompt = input_prompt + f"- Preço da oferta: {data['price']}\n"
 
-    creative_prompt = base_prompt + input_prompt
+    creative_prompt = PROMPT_CREATIVE + input_prompt
 
     return creative_prompt
 
@@ -111,10 +109,7 @@ def generate_cript_stream(data):
     threading.Thread(target=generate_stream).start()
 
 def generate_script_prompt(data):
-    with open("backend/api/promptScript.txt", "r", encoding="utf-8") as f:
-        base_prompt = f.read()
-
-    script_prompt = base_prompt + data['creative']
+    script_prompt = PROMPT_SCRIPT + data['creative']
 
     return script_prompt
 
