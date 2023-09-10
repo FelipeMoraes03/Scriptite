@@ -5,6 +5,7 @@ import threading
 import openai
 import json
 
+#from prompt import PROMPT_TESTE
 from prompt import PROMPT_CREATIVE, PROMPT_SCRIPT, PROMPT_STORY_BOARD
 
 MODEL_GPT = 'gpt-4'
@@ -22,7 +23,8 @@ CORS(app)
 content_cache = {
     "creative": "",
     "script": "",
-    "story_board": ""
+    #"script": PROMPT_TESTE,
+    "story_board": []
 }
 
 @socketio.on('connect')
@@ -117,6 +119,7 @@ def get_script():
 @socketio.on('story_board')
 def generate_scene_prompt(data):
     prompt = PROMPT_STORY_BOARD + data['script']
+    #prompt = PROMPT_STORY_BOARD + PROMPT_TESTE
 
     gpt_response = openai.ChatCompletion.create(
         model=MODEL_GPT,
@@ -136,19 +139,17 @@ def generate_scene_prompt(data):
                     socketio.emit('story_board_chunk', {"story_board": story_board_chunk})
                     generated_story_board += story_board_chunk
             socketio.emit('story_board_streaming_complete')
+        
+        print(generated_story_board)
 
     threading.Thread(target=generate_stream).start()
 
 @app.route('/story-board', methods=['POST'])
 def generate_scene_image():
     data = request.json
-    prompt = data['scene']
+    prompt = data['scene'].replace("\n", "<br>")
 
-    return make_response(
-        jsonify(scene=(prompt.replace("\n", "<br>")))
-    )
-
-    """response = openai.Image.create(
+    response = openai.Image.create(
         prompt = prompt,
 
         n = 1,
@@ -158,10 +159,17 @@ def generate_scene_image():
     image_url = response['data'][0]['url']
 
     print(image_url)
+    content_cache['story_board'].append(image_url)
 
     return make_response(
         jsonify(scene=image_url)
-    )"""
+    )
+
+@app.route('/story-board', methods=['GET'])
+def get_story_board():
+    return make_response(
+        jsonify(story_board=(content_cache['story_board']))
+    )
 
 if __name__ == "__main__":
     socketio.run(app, host="localhost", port=5001, debug=True)

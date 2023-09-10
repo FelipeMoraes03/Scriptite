@@ -8,8 +8,13 @@ const socket = io('http://localhost:5001');
 
 function Main() {
     const [script, setScript] = useState("");
-    const [urlImages, setUrlImages] = useState([])
-    const [scenesPrompt, setScenesPrompt] = useState([])
+    const [urlImages, setUrlImages] = useState([]);
+    const [scenesPrompt, setScenesPrompt] = useState([]);
+    const [concatenatedImages, setConcatenatedImages] = useState("");
+
+    useEffect(() => {
+        setConcatenatedImages(urlImages.join('<br>'));
+    }, [urlImages]);
 
     return (
         <main className='flex flex-line items-center justify-center space-x-20 mt-20'>
@@ -18,7 +23,7 @@ function Main() {
                 <GenerateButton input={script} urlImages={urlImages} setImages={setUrlImages} scenes={scenesPrompt} setScenes={setScenesPrompt} text={"GERAR STORY BOARD"}/>
             </div>
             <div className='flex flex-col items-center content-center'>
-                <ShowStoryBoard text={urlImages[0]}/>
+                <ShowStoryBoard text={concatenatedImages}/>
                 <StoryBoardPageButton script={script} text={"PRÓXIMO"}/>
             </div>
         </main>
@@ -34,26 +39,34 @@ function GenerateButton(props) {
         // Quando streamingComplete for true, faça a requisição POST
         if (streamingComplete) {
             setStreamingComplete(false);
-            // CRIA AS IMAGENS A PARTIR DOS PROMPTS
-            const callDalle = async () => {
-                try {
-                    const res = await axios.post("http://localhost:5001/story-board", {
-                        "scene": storyBoardPrompt //NÃO ESTÁ PASSANDO NADA, A REQUISIÇÃO ESTÁ CHEGANDO NO BACK VAZIA!!!
-                    });
 
-                    if (res.status === 200) {
-                        let scene = JSON.stringify(res.data.scene)
-                        scene = scene.substring(1, scene.length - 1);
+            let dallePrompts = storyBoardPrompt.split(/PROMPT SCENE \d+: /);
 
-                        props.setImages([...props.urlImages, scene])
+            let prompt = "";
+            for (let index = 1; index < dallePrompts.length; index++) {
+                // CRIA AS IMAGENS A PARTIR DOS PROMPTS
+                prompt = dallePrompts[index];
+                const callDalle = async () => {
+                    try {
+                        const res = await axios.post("http://localhost:5001/story-board", {
+                            "scene": prompt
+                        });
+
+                        if (res.status === 200) {
+                            let scene = JSON.stringify(res.data.scene);
+                            scene = scene.substring(1, scene.length - 1);
+
+                            const updatedUrl = [...props.urlImages, scene]
+                            props.setImages(updatedUrl); //NÃO ESTÁ GUARDANDO AS URLS, APENAS 1
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        alert(err);
                     }
-                } catch (err) {
-                    console.error(err);
-                    alert(err);
-                }
-            };
+                };
 
-            callDalle();
+                callDalle();
+            }
         }
     }, [streamingComplete, storyBoardPrompt, props]);
 
