@@ -1,3 +1,5 @@
+MODEL_GPT = 'gpt-4'
+
 PROMPT_CREATIVE = """
 IDENTIDADE:
 
