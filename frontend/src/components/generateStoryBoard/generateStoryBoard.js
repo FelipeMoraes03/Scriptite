@@ -8,19 +8,15 @@ const socket = io('http://localhost:5001');
 
 function Main() {
     const [script, setScript] = useState("");
-    const [urlImages, setUrlImages] = useState([]);
+    const [urlImages, setUrlImages] = useState(["", "", "", ""]);
     const [scenesPrompt, setScenesPrompt] = useState([]);
     const [concatenatedImages, setConcatenatedImages] = useState("");
-
-    useEffect(() => {
-        setConcatenatedImages(urlImages.join('<br>'));
-    }, [urlImages]);
 
     return (
         <main className='flex flex-line items-center justify-center space-x-20 mt-20'>
             <div className='flex flex-col items-center content-center'>
                 <ShowScript script={script} setScript={setScript}/>
-                <GenerateButton input={script} urlImages={urlImages} setImages={setUrlImages} scenes={scenesPrompt} setScenes={setScenesPrompt} text={"GERAR STORY BOARD"}/>
+                <GenerateButton input={script} urlImages={urlImages} setImagesUnit={setUrlImages} setImages={setConcatenatedImages} scenes={scenesPrompt} setScenes={setScenesPrompt} text={"GERAR STORY BOARD"}/>
             </div>
             <div className='flex flex-col items-center content-center'>
                 <ShowStoryBoard text={concatenatedImages}/>
@@ -40,7 +36,7 @@ function GenerateButton(props) {
         if (streamingComplete) {
             setStreamingComplete(false);
 
-            let dallePrompts = storyBoardPrompt.split(/PROMPT SCENE \d+: /);
+            let dallePrompts = storyBoardPrompt.split(/PROMPT SCENE /);
 
             let prompt = "";
             for (let index = 1; index < dallePrompts.length; index++) {
@@ -54,10 +50,14 @@ function GenerateButton(props) {
 
                         if (res.status === 200) {
                             let scene = JSON.stringify(res.data.scene);
-                            scene = scene.substring(1, scene.length - 1);
+                            let idx = scene.substring(2, 3);
+                            idx = parseInt(idx)-1;
+                            scene = scene.substring(6, scene.length - 2);
 
-                            const updatedUrl = [...props.urlImages, scene]
-                            props.setImages(updatedUrl); //NÃO ESTÁ GUARDANDO AS URLS, APENAS 1
+                            let updatedUrl = props.urlImages
+                            updatedUrl[idx] = scene;
+                            props.setImagesUnit(updatedUrl); //NÃO ESTÁ GUARDANDO AS URLS, APENAS 1
+                            props.setImages(updatedUrl.join('<br><br>'));
                         }
                     } catch (err) {
                         console.error(err);

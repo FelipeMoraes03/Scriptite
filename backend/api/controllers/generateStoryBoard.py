@@ -51,10 +51,11 @@ def generate_scene_image():
     image_url = response['data'][0]['url']
 
     print(image_url)
-    story_board_cache['story_board'].append(image_url)
+    tupla = (prompt[0], image_url)
+    story_board_cache['story_board'].append(tupla)
 
     return make_response(
-        jsonify(scene=image_url)
+        jsonify(scene=tupla)
     )
 
 def get_story_board():
