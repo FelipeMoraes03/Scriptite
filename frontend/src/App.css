@@ -1,0 +1,48 @@
+.backgroundColor1{
+    background-color: #DBDBDB;
+}
+
+.backgroundColor2{
+    background-color: #F2F1FA;
+}
+
+.backgroundColor3{
+    background-color: #5D5A88;
+}
+
+.fontColor1{
+    color: #FFFFFF;
+}
+
+.fontColor2{
+    color: #5D5A88;
+}
+
+.fontColor3{
+    color: #858585;
+}
+
+.fontColor4{
+    color: #9795B5;
+}
+
+.fontSize1{
+    font-size: 4vh;
+}
+
+.fontSize2{
+    font-size: 5vh;
+}
+
+.fontWeigth1{
+    font-weight: 700;
+}
+
+button{
+    background-color: #5D5A88;
+    color: #FFFFFF;
+    border-radius: 4px;
+    align-items: center;
+}
+
+

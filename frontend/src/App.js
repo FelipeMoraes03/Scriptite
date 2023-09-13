@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './components/home/home'
-import GenerateCreativePage from './components/generateCreative/generateCreative'
-import GenerateScriptPage from './components/generateScript/generateScript'
-import GenerateStoryBoardPage from './components/generateStoryBoard/generateStoryBoard'
-import RenderResultsPage from './components/renderResults/renderResults'
+import HomePage from './components/home/home';
+import GenerateCreativePage from './components/generateCreative/generateCreative';
+import GenerateScriptPage from './components/generateScript/generateScript';
+import GenerateStoryBoardPage from './components/generateStoryBoard/generateStoryBoard';
+import RenderResultsPage from './components/renderResults/renderResults';
+import './App.css';
 
 function App() {
   return (
