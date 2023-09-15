@@ -1,29 +1,28 @@
-.backgroundColor1{
-    background-color: #DBDBDB;
-}
+:root{
+    --color-1: #DBDBDB;
+    --color-2: #F2F1FA;
+    --color-3: #5D5A88;
 
-.backgroundColor2{
-    background-color: #F2F1FA;
-}
-
-.backgroundColor3{
-    background-color: #5D5A88;
+    --font-color-1:#FFFFFF;
+    --font-color-2:#5D5A88;
+    --font-color-3:#858585;
+    --font-color-4:#9795B5;
 }
 
 .fontColor1{
-    color: #FFFFFF;
+    color: var(--font-color-1);
 }
 
 .fontColor2{
-    color: #5D5A88;
+    color: var(--font-color-2);
 }
 
 .fontColor3{
-    color: #858585;
+    color: var(--font-color-3);
 }
 
 .fontColor4{
-    color: #9795B5;
+    color: var(--font-color-4);
 }
 
 .fontSize1{
@@ -44,5 +43,32 @@ button{
     border-radius: 4px;
     align-items: center;
 }
+
+button:hover{
+    background-color: #4a43ab;
+}
+
+/*header*/
+
+#header{
+    display: grid;
+    height: 9.25vh;
+    font-weight: 700;
+    grid-template-columns: 20vw 20vw 20vw 20vw 20vw;
+    background-color: var(--color-2);
+
+}
+
+#header div{
+    display: flex;
+    align-items: center;
+    border-right: 2px solid var(--color-1);
+}
+
+.headerBoxLogo{
+    align-items: center;
+    padding-left: 30%;
+}
+
 
 

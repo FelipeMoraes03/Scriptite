@@ -3,6 +3,8 @@
     height: 9.25vh;
     align-items: center;
     font-weight: 700;
+
+    background-color: var(--color-2);
 }
 
 .headerHome div:first-child{
@@ -34,6 +36,8 @@
     align-items: center;
     padding: 7vh;
 
+    background-color: var(--color-1);
+
 }
 
 .centerBox{
@@ -44,6 +48,8 @@
 .boxHome{
     display: flex;
     flex-direction: row;
+
+    background-color: var(--color-2);
 }
 
 #boxHome1{
@@ -51,6 +57,7 @@
 
     display: flex;
     flex-direction: column;
+    padding-right: 7%;
 }
 
 #boxHome1 button{

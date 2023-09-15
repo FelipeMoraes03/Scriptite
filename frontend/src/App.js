@@ -7,6 +7,8 @@ import GenerateStoryBoardPage from './components/generateStoryBoard/generateStor
 import RenderResultsPage from './components/renderResults/renderResults';
 import './App.css';
 
+
+
 function App() {
   return (
     <Router>

@@ -7,7 +7,7 @@ import img1 from './img1.png';
 function Home() {
     return (
         <div>
-            <header className="headerHome backgroundColor2">
+            <header className="headerHome">
                 <div className="logoBox">
                     <h1 className="fontColor2 fontSize1">
                         script
@@ -24,9 +24,9 @@ function Home() {
 
             </header>
 
-            <div className=" bodyHome backgroundColor1">
+            <div className="bodyHome">
 
-                <div className="centerBox boxHome backgroundColor2">
+                <div className="centerBox boxHome">
                     <div id="boxHome1">
 
                         <div>
