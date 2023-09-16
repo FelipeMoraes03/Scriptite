@@ -13,10 +13,17 @@ function Main() {
     const [scenesPrompt, setScenesPrompt] = useState([]);
     const [concatenatedImages, setConcatenatedImages] = useState("");
 
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('hbp1').classList.remove('selectBorder');
+        document.getElementById('hbp2').classList.add('selectBorder');
+        document.getElementById('hbp3').classList.remove('selectBorder');
+        document.getElementById('hbp4').classList.remove('selectBorder');  
+      });
+
     return (
         <main className>
 
-            <Header/>
+            <Header screen={3}/>
 
             <div className='flex flex-col items-center content-center'>
                 <ShowScript script={script} setScript={setScript}/>

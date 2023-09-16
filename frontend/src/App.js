@@ -5,11 +5,14 @@ import GenerateCreativePage from './components/generateCreative/generateCreative
 import GenerateScriptPage from './components/generateScript/generateScript';
 import GenerateStoryBoardPage from './components/generateStoryBoard/generateStoryBoard';
 import RenderResultsPage from './components/renderResults/renderResults';
+import Header from './components/header/header';
 import './App.css';
 
 
 
+
 function App() {
+
   return (
     <Router>
       <Routes>

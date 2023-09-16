@@ -7,6 +7,8 @@
     --font-color-2:#5D5A88;
     --font-color-3:#858585;
     --font-color-4:#9795B5;
+    --font-color-5:#717171;
+    --font-color-6:#242424;
 }
 
 .fontColor1{
@@ -46,28 +48,6 @@ button{
 
 button:hover{
     background-color: #4a43ab;
-}
-
-/*header*/
-
-#header{
-    display: grid;
-    height: 9.25vh;
-    font-weight: 700;
-    grid-template-columns: 20vw 20vw 20vw 20vw 20vw;
-    background-color: var(--color-2);
-
-}
-
-#header div{
-    display: flex;
-    align-items: center;
-    border-right: 2px solid var(--color-1);
-}
-
-.headerBoxLogo{
-    align-items: center;
-    padding-left: 30%;
 }
 
 

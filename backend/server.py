@@ -10,7 +10,7 @@ from configFlask import *
 
 #from prompt import PROMPT_TESTE
 
-with open('backend/credentials.json', 'r') as f:
+with open('./credentials.json', 'r') as f:
     credentials = json.load(f)
 
 openai.api_key = credentials['openai_api_key']

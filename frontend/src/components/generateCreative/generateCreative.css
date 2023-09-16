@@ -59,17 +59,54 @@
 }
 
 #outputBoxCreative{
-
     overflow: auto;
-
     color:rgb(32, 0, 137);
     font-weight: 600;
     font-size: 2vh;
+}
+
+.obc1{
+    padding: 35% 25% 0% 28%;
+    text-align: center;
+}
+
+.obc1 div:first-child{
+    font-size: 0;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.obc2{
+    padding: 1vh;
+    height: 100%;
+}
+.obc2-1{
+    height: 10%;
+    display: grid;
+    grid-template-columns: 65% 35%;
+
+}
+
+.obc2-1 div:first-child{
+    font-size: 5vh;
+    padding-left: 4%;
+}
+
+.obc2-1 div:last-child{
+    padding-left: 40%;
+    font-size: 3vh;
+    display: flex;
     align-items: center;
+}
 
-    
+.buttonNext{
+    padding: 1%;
+}
 
-
+.obc2-2{
+    height: 90%;
+    padding: 2%;
+    font-size: 3vh;
+    overflow: auto;
 }
 
 /**/

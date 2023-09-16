@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import './home.css';
+import Header from '../header/header';
 
 import img1 from './img1.png';
 
 function Home() {
+
     return (
         <div>
             <header className="headerHome">

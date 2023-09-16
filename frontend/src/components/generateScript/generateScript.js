@@ -15,7 +15,7 @@ function Main() {
         
         <main>
 
-            <Header/>
+            <Header screen={2}/>
 
             <div className='flex flex-col items-center content-center'>
                 <ShowCreative creative={creative} setCreative={setCreative}/>
@@ -25,6 +25,7 @@ function Main() {
                 <ShowScript text={script}/>
                 <StoryBoardPageButton script={script} text={"PRÓXIMO"}/>
             </div>
+
         </main>
     );
 }

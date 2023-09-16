@@ -12,9 +12,9 @@ function Main() {
     const [creative, setCreative] = useState("")
 
     return (
-        <div>
+        <div >
             
-            <Header/>
+            <Header screen={1}/>
 
             <div className="bodyCreative backgroundColor1">
 
@@ -37,20 +37,33 @@ function Main() {
                 <div id='icon' className='fontColor2'>
                     -&gt;
                 </div>
-                <div className='creativeBox' id='outputBoxCreative'>
-                        Preencha as informações, clique em gerar criativo e aguarde.
+                <div className='creativeBox obc1' id='outputBoxCreative'>
+
+                    <div id='obc21'>   
+                         <div className='obc2-1'>Criativo</div>
+                         <div><ScriptPageButton creative={creative} text={"PRÓXIMO"}/></div>
+                    </div>
+                    <div className='obc2-2'>
+                        <ShowCreative text={creative}/>
+                        <div id='text1'>
+                            Preencha as informações, clique em gerar criativo e aguarde.
+                        </div>
+                    </div>
+
                 </div>
-
-
+                        
             </div>
             <div className=" footer fontColor4">
                     Copyright © 2023 | Todos os direitos reservados
             </div>
 
         </div>
+    
     );
+
 }
 export default Main;
+
 
 function KeyWord(props) {
     return (
@@ -74,12 +87,21 @@ function KeyWord(props) {
 }
 
 function GenerateButton(props) {
+
+
     let updatedCreative = ""
 
     async function generateCreativeClick() {
         if (props.input.includes("")) {
             alert("Todos as palavras chaves precisam ser definidas");
         } else {
+
+            let box =  document.getElementById('outputBoxCreative');
+            box.classList.remove('obc1');
+            box.classList.add('obc2');
+            document.getElementById('text1').innerHTML="";
+            document.getElementById('obc21').classList.add('obc2-1');
+
             try {
                 socket.emit('generate_creative', {
                     product_name: props.input[0],
@@ -125,6 +147,7 @@ function ShowCreative(props) {
 }
 
 function ScriptPageButton(props) {
+
     const scriptClick = async () => {
         if (props.creative === "") {
             alert("É necessário gerar um criativo antes de avançar");
@@ -134,12 +157,14 @@ function ScriptPageButton(props) {
     return (
         <next>
             {props.creative === "" ? (
-                <button className='button-home' onClick={scriptClick}>{props.text}</button>
+                <button className='buttonNext' onClick={scriptClick}>{props.text}</button>
             ) : (
                 <Link to={`/script`}>
-                    <button className='button-home'>{props.text}</button>
+                    <button className='buttonNext'>{props.text}</button>
                 </Link>
             )}
         </next>
     );
 }
+
+
