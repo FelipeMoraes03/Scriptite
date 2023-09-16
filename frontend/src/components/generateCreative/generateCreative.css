@@ -36,6 +36,7 @@
     flex-direction: column;
     align-items: baseline;
     margin-bottom: 1.5%;
+    font-size: 2vh;
 
 }
 
@@ -45,10 +46,13 @@
     padding: 1vh;
     width: 100%;
     font-weight: 700;
+    font-size: 2vh;
 
 }
 
 .input{
+
+    font-size: 2vh;
     width: 42.5vw;
     border-radius: 5px;
     background: var(--color-1);
@@ -72,13 +76,14 @@
 
 .obc1 div:first-child{
     font-size: 0;
-    background-color: rgba(255, 255, 255, 0);
 }
+
 
 .obc2{
     padding: 1vh;
     height: 100%;
 }
+
 .obc2-1{
     height: 10%;
     display: grid;
@@ -92,14 +97,14 @@
 }
 
 .obc2-1 div:last-child{
-    padding-left: 40%;
+    padding-left: 54%;
     font-size: 3vh;
     display: flex;
     align-items: center;
 }
 
-.buttonNext{
-    padding: 1%;
+.obc2 button{
+    padding: 1% 9%;
 }
 
 .obc2-2{
@@ -107,6 +112,11 @@
     padding: 2%;
     font-size: 3vh;
     overflow: auto;
+    border-radius: 5px;
+
+    color: var(--font-color-7);
+
+    background-color: var(--color-1);
 }
 
 /**/

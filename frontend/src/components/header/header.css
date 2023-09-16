@@ -17,7 +17,10 @@
     align-items: center;
     padding-left: 30%;
     border-right: 2px solid var(--color-1);
+    position: relative;
+    top: 2%;
 }
+
 .headerBoxPage{
 
     border-right: 2px solid var(--color-1);

@@ -40,15 +40,18 @@ function Main() {
                 <div className='creativeBox obc1' id='outputBoxCreative'>
 
                     <div id='obc21'>   
-                         <div className='obc2-1'>Criativo</div>
-                         <div><ScriptPageButton creative={creative} text={"PRÓXIMO"}/></div>
+                         <div>Criativo</div>
+                         <div><ScriptPageButton creative={creative} text={"Escolher"}/></div>
                     </div>
-                    <div className='obc2-2'>
+
+                    <div id='obc22'>
                         <ShowCreative text={creative}/>
+
                         <div id='text1'>
                             Preencha as informações, clique em gerar criativo e aguarde.
                         </div>
                     </div>
+
 
                 </div>
                         
@@ -93,7 +96,7 @@ function GenerateButton(props) {
 
     async function generateCreativeClick() {
         if (props.input.includes("")) {
-            alert("Todos as palavras chaves precisam ser definidas");
+            alert("Todos os campos precisam ser preenchidos");
         } else {
 
             let box =  document.getElementById('outputBoxCreative');
@@ -101,6 +104,7 @@ function GenerateButton(props) {
             box.classList.add('obc2');
             document.getElementById('text1').innerHTML="";
             document.getElementById('obc21').classList.add('obc2-1');
+            document.getElementById('obc22').classList.add('obc2-2');
 
             try {
                 socket.emit('generate_creative', {
@@ -157,7 +161,7 @@ function ScriptPageButton(props) {
     return (
         <next>
             {props.creative === "" ? (
-                <button className='buttonNext' onClick={scriptClick}>{props.text}</button>
+                <button onClick={scriptClick}>{props.text}</button>
             ) : (
                 <Link to={`/script`}>
                     <button className='buttonNext'>{props.text}</button>
