@@ -1,0 +1,56 @@
+:root{
+    --color-1: #DBDBDB;
+    --color-2: #F2F1FA;
+    --color-3: #5D5A88;
+
+    --font-color-1:#FFFFFF;
+    --font-color-2:#5D5A88;
+    --font-color-3:#858585;
+    --font-color-4:#9795B5;
+    --font-color-5:#717171;
+    --font-color-6:#242424;
+    --font-color-7:#343434;
+
+}
+
+.fontColor1{
+    color: var(--font-color-1);
+}
+
+.fontColor2{
+    color: var(--font-color-2);
+}
+
+.fontColor3{
+    color: var(--font-color-3);
+}
+
+.fontColor4{
+    color: var(--font-color-4);
+}
+
+.fontSize1{
+    font-size: 4vh;
+}
+
+.fontSize2{
+    font-size: 5vh;
+}
+
+.fontWeigth1{
+    font-weight: 700;
+}
+
+button{
+    background-color: #5D5A88;
+    color: #FFFFFF;
+    border-radius: 4px;
+    align-items: center;
+}
+
+button:hover{
+    background-color: #4a43ab;
+}
+
+
+

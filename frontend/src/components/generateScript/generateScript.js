@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import io from 'socket.io-client';
 import './generateScript.css';
+import Header from '../header/header.js';
 
 const socket = io('http://localhost:5001');
 
@@ -11,7 +12,11 @@ function Main() {
     const [script, setScript] = useState("");
 
     return (
-        <main className='flex flex-line items-center justify-center space-x-20 mt-20'>
+        
+        <main>
+
+            <Header screen={2}/>
+
             <div className='flex flex-col items-center content-center'>
                 <ShowCreative creative={creative} setCreative={setCreative}/>
                 <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"}/>
@@ -20,6 +25,7 @@ function Main() {
                 <ShowScript text={script}/>
                 <StoryBoardPageButton script={script} text={"PRÓXIMO"}/>
             </div>
+
         </main>
     );
 }

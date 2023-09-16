@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import io from 'socket.io-client';
 import './generateStoryBoard.css';
+import Header from '../header/header.js';
 
 const socket = io('http://localhost:5001');
 
@@ -12,8 +13,18 @@ function Main() {
     const [scenesPrompt, setScenesPrompt] = useState([]);
     const [concatenatedImages, setConcatenatedImages] = useState("");
 
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('hbp1').classList.remove('selectBorder');
+        document.getElementById('hbp2').classList.add('selectBorder');
+        document.getElementById('hbp3').classList.remove('selectBorder');
+        document.getElementById('hbp4').classList.remove('selectBorder');  
+      });
+
     return (
-        <main className='flex flex-line items-center justify-center space-x-20 mt-20'>
+        <main className>
+
+            <Header screen={3}/>
+
             <div className='flex flex-col items-center content-center'>
                 <ShowScript script={script} setScript={setScript}/>
                 <GenerateButton input={script} urlImages={urlImages} setImagesUnit={setUrlImages} setImages={setConcatenatedImages} scenes={scenesPrompt} setScenes={setScenesPrompt} text={"GERAR STORY BOARD"}/>

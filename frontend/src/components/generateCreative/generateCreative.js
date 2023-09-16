@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import io from 'socket.io-client';
 import './generateCreative.css';
+import Header from '../header/header';
 
 const socket = io('http://localhost:5001');
 
@@ -11,34 +12,68 @@ function Main() {
     const [creative, setCreative] = useState("")
 
     return (
-        <main className='flex flex-line items-center justify-center space-x-40 mt-20'>
-            <div className='flex flex-col items-center justify-center'>
-                <KeyWord numInput={1} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Nome Produto"} />
-                <KeyWord numInput={2} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Publico Alvo"} />
-                <KeyWord numInput={3} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Dores"} />
-                <KeyWord numInput={4} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Necessidades"} />
-                <KeyWord numInput={5} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Solucao"} />
-                <KeyWord numInput={6} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Formato Produto"} />
-                <KeyWord numInput={7} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Diferencial Produto"} />
-                <KeyWord numInput={8} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Objetivos Produto"} />
-                <KeyWord numInput={9} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Preco Porduto"} />
-                <GenerateButton input={keyWordInput} setKeyWord={setKeyWordInput} setCreative={setCreative} text={"GERAR CRIATIVO"}/>
+        <div >
+            
+            <Header screen={1}/>
+
+            <div className="bodyCreative backgroundColor1">
+
+                <div className='creativeBox'>
+
+                    <div> 
+                        <KeyWord numInput={1} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Nome Produto"} description={"Qual o nome do seu produto?"} />
+                        <KeyWord numInput={2} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Público alvo"} description={"Qual seu nicho/público-alvo?"} />
+                        <KeyWord numInput={3} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Dores e problemáticas"} description={"Quais as dores do seu público?"} />
+                        <KeyWord numInput={4} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Necessidades"} description={"Quais necessidades seu produto satisfaz?"} />
+                        <KeyWord numInput={5} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Solução"} description={"Como seu produto atua na resolução do problema?"} />
+                        <KeyWord numInput={6} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Formato (ex: aplicativo, lanchonete, vestimenta...)"} description={"Qual o formato do seu produto?"} />
+                        <KeyWord numInput={7} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Diferencial"} description={"Qual diferencial seu protudo terá?"} />
+                        <KeyWord numInput={8} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Objetivos (ex: anunciar novo sabor de picolé, divulgar inauguração...)"} description={"Objetivos do anúncio."} />
+                        <KeyWord numInput={9} input={keyWordInput} setKeyWord={setKeyWordInput} placeholderInput={"Preço"} description={"Estipule um preço para seu produto."} />
+                        <GenerateButton input={keyWordInput} setKeyWord={setKeyWordInput} setCreative={setCreative} text={"GERAR CRIATIVO"}/>
+                    </div>
+
+                </div>
+                <div id='icon' className='fontColor2'>
+                    -&gt;
+                </div>
+                <div className='creativeBox obc1' id='outputBoxCreative'>
+
+                    <div id='obc21'>   
+                         <div>Criativo</div>
+                         <div><ScriptPageButton creative={creative} text={"Escolher"}/></div>
+                    </div>
+
+                    <div id='obc22'>
+                        <ShowCreative text={creative}/>
+
+                        <div id='text1'>
+                            Preencha as informações, clique em gerar criativo e aguarde.
+                        </div>
+                    </div>
+
+
+                </div>
+                        
             </div>
-            <div className='flex flex-col items-center content-center'>
-                <ShowCreative text={creative}/>
-                <ScriptPageButton creative={creative} text={"PRÓXIMO"}/>
+            <div className=" footer fontColor4">
+                    Copyright © 2023 | Todos os direitos reservados
             </div>
-        </main>
+
+        </div>
+    
     );
+
 }
 export default Main;
 
+
 function KeyWord(props) {
     return (
-        <keyword className='flex flex-line pb-3 justify-end items-center'>
-            <num className='pr-3 text-2xl'>{props.numInput}.</num>
+        <keyword className='inputBox'>
+            <num>{props.description}</num>
             <input type="text" name="inputKeyword" id="inputKeyword"
-                className="block rounded-md py-2 pr-20 sm:text-sm inputLabel"
+                className="input"
                 placeholder={props.placeholderInput}
                 value={props.input[props.numInput-1]}
                 onChange={(e) => props.setKeyWord(
@@ -55,11 +90,22 @@ function KeyWord(props) {
 }
 
 function GenerateButton(props) {
+
+
     let updatedCreative = ""
+
     async function generateCreativeClick() {
         if (props.input.includes("")) {
-            alert("Todos as palavras chaves precisam ser definidas");
+            alert("Todos os campos precisam ser preenchidos");
         } else {
+
+            let box =  document.getElementById('outputBoxCreative');
+            box.classList.remove('obc1');
+            box.classList.add('obc2');
+            document.getElementById('text1').innerHTML="";
+            document.getElementById('obc21').classList.add('obc2-1');
+            document.getElementById('obc22').classList.add('obc2-2');
+
             try {
                 socket.emit('generate_creative', {
                     product_name: props.input[0],
@@ -88,7 +134,7 @@ function GenerateButton(props) {
 
     return (
         <generate>
-            <button className='button-home' onClick={generateCreativeClick}>{props.text}</button>
+            <button className='creaButton' onClick={generateCreativeClick}>{props.text}</button>
             <div>{props.creative}</div>
         </generate>
     );
@@ -105,6 +151,7 @@ function ShowCreative(props) {
 }
 
 function ScriptPageButton(props) {
+
     const scriptClick = async () => {
         if (props.creative === "") {
             alert("É necessário gerar um criativo antes de avançar");
@@ -114,12 +161,14 @@ function ScriptPageButton(props) {
     return (
         <next>
             {props.creative === "" ? (
-                <button className='button-home' onClick={scriptClick}>{props.text}</button>
+                <button onClick={scriptClick}>{props.text}</button>
             ) : (
                 <Link to={`/script`}>
-                    <button className='button-home'>{props.text}</button>
+                    <button className='buttonNext'>{props.text}</button>
                 </Link>
             )}
         </next>
     );
 }
+
+
