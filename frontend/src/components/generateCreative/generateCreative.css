@@ -1,131 +1,172 @@
+.bodyCreative {
+  height: 88vh;
 
-.bodyCreative{
-    height: 86vh;
+  display: grid;
+  grid-template-columns: 45vw 3vw 45vw;
 
-    display: grid;
-    grid-template-columns: 45vw 3vw 45vw;
-
-    padding: 1.2vw 3vw;
-    background-color: var(--color-1);
-
+  padding: 1.2vw 3vw;
+  background-color: var(--color-1);
 }
 
-.creativeBox{
-    width: 45.5vw;
-    height: 83vh;
-    border-radius: 5px;
-    background-color: var(--color-2);
-    padding: 1.5vw;
+.creativeBox {
+  width: 45.5vw;
+  height: 84vh;
+  border-radius: 5px;
+  background-color: var(--color-2);
+  padding: 1.5vw;
 }
 
-#icon{
-    height: 80vh;
-    width: 3vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 37vh;
+#icon {
+  height: 80vh;
+  width: 3.5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 37vh;
 }
 
-/**/
-
-.inputBox{
-    color: var(--font-color-2);
-    font-weight: 700;
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
-    margin-bottom: 1.5%;
-    font-size: 2vh;
-
+#text1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 1em;
+  font-weight: 500;
+  height: 100%;
+  color: #858585;
 }
 
-.creaButton{
-
-    margin-top: 2vh;
-    padding: 1vh;
-    width: 100%;
-    font-weight: 700;
-    font-size: 2vh;
-
-}
-
-.input{
-
-    font-size: 2vh;
-    width: 42.5vw;
-    border-radius: 5px;
-    background: var(--color-1);
-    padding-left: 3%;
-    font-weight: 400;
-    padding: 0.3vh;
-
-}
-
-#outputBoxCreative{
-    overflow: auto;
-    color:rgb(32, 0, 137);
-    font-weight: 600;
-    font-size: 2vh;
-}
-
-.obc1{
-    padding: 35% 25% 0% 28%;
-    text-align: center;
-}
-
-.obc1 div:first-child{
-    font-size: 0;
-}
-
-
-.obc2{
-    padding: 1vh;
-    height: 100%;
-}
-
-.obc2-1{
-    height: 10%;
-    display: grid;
-    grid-template-columns: 65% 35%;
-
-}
-
-.obc2-1 div:first-child{
-    font-size: 5vh;
-    padding-left: 4%;
-}
-
-.obc2-1 div:last-child{
-    padding-left: 54%;
-    font-size: 3vh;
-    display: flex;
-    align-items: center;
-}
-
-.obc2 button{
-    padding: 1% 9%;
-}
-
-.obc2-2{
-    height: 90%;
-    padding: 2%;
-    font-size: 3vh;
-    overflow: auto;
-    border-radius: 5px;
-
-    color: var(--font-color-7);
-
-    background-color: var(--color-1);
+#text1 svg {
+  font-size: 1.5em;
 }
 
 /**/
 
-.footer{
-    padding-top: 0.4vh;
-    height: 4.75vh;
-    width: 100vw;
-    text-align: center;
-    font-size: 1.8vh;
-    background-color: var(--color-1);
+.inputBox {
+  color: var(--font-color-2);
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin-bottom: 1.5%;
+  font-size: 2vh;
+}
+
+.creaButton {
+  margin-top: 1.2vh;
+  padding: 1.2vh;
+  width: 100%;
+  font-weight: 700;
+  font-size: 2vh;
+}
+
+.input {
+  font-size: 2vh;
+  width: 42.5vw;
+  border-radius: 5px;
+  background: var(--color-1);
+  padding-left: 3%;
+  font-weight: 400;
+  padding: 0.3vh 10px;
+}
+
+#outputBoxCreative {
+  overflow: hidden;
+  color: rgb(32, 0, 137);
+  font-weight: 600;
+  font-size: 2vh;
+}
+
+.obc1 {
+  padding: 35% 25% 0% 28%;
+  text-align: center;
+}
+
+.obc1 div:last-child {
+  font-size: 0;
+}
+
+.obc2 {
+  padding: 1vh;
+  height: 100%;
+}
+
+.obc2-1 {
+  height: 10%;
+}
+
+.obc2-1 div:first-child {
+  font-size: 5vh;
+  padding-left: 4%;
+}
+
+.obc2-1 div:last-child {
+  font-size: 3vh;
+  display: flex;
+  align-items: center;
+}
+
+.obc2 button {
+  margin: 2vh 1vw 0 1vw;
+  padding: 1.2vh;
+  width: 95%;
+  font-weight: 700;
+  font-size: 2vh;
+}
+
+.obc2-2 {
+  height: 90%;
+  padding: 2%;
+  font-size: 3vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 5px;
+  color: var(--font-color-7);
+}
+
+.showCreative #identifierCreative {
+  margin-bottom: 10px;
+}
+.showCreative #identifierCreative .title {
+  margin-bottom: 10px;
+}
+
+.showCreative #identifierCreative .title {
+  font-size: 3vh;
+  font-weight: 700;
+  color: #5d5a88;
+  text-align: center;
+}
+
+.showCreative .responseItem {
+  margin-bottom: 10px;
+}
+
+.showCreative .responseItem .title {
+  color: #5d5a88;
+  font-family: DM Sans;
+  font-size: 2vh;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 18px; /* 100% */
+}
+
+.showCreative .responseItem .value {
+  color: #343434;
+  font-family: DM Sans;
+  font-size: 12px;
+  font-style: normal;
+  line-height: 18px;
+  padding-right: 10px;
+}
+
+/**/
+
+.footer {
+  padding-top: 0.4vh;
+  height: 4.75vh;
+  width: 100vw;
+  text-align: center;
+  font-size: 2vh;
+  background-color: var(--color-1);
 }
