@@ -1,62 +1,70 @@
-#header{
-    display: grid;
-    height: 9.25vh;
-    font-weight: 700;
-    grid-template-columns: 20vw 20vw 20vw 20vw 20vw;
-    background-color: var(--color-2);
+#header {
+  display: grid;
+  height: 9.25vh;
+  font-weight: 700;
+  grid-template-columns: 20vw 20vw 20vw 20vw 20vw;
+  background-color: var(--color-2);
 }
 
-
-#header div{
-    display: flex;
-    align-items: center;
-
+#header div {
+  display: flex;
+  align-items: center;
 }
 
-.headerBoxLogo{
-    align-items: center;
-    padding-left: 30%;
-    border-right: 2px solid var(--color-1);
-    position: relative;
-    top: 2%;
+.headerBoxLogo {
+  align-items: center;
+  padding-left: 30%;
+  border-right: 2px solid var(--color-1);
+  position: relative;
+  top: 2%;
 }
 
-.headerBoxPage{
-
-    border-right: 2px solid var(--color-1);
-    padding: 1.7vh 2vh;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-
+.headerBoxPage {
+  border-right: 2px solid var(--color-1);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
 }
 
-.headerBoxPage div:first-child{
-
-    width: 80%;
-    text-align: start;
-    color: var(--font-color-5);
-    font-size: 1.5vh;
-
+.headerBoxPage div:first-child {
+  width: 80%;
+  text-align: start;
+  color: var(--font-color-3);
+  font-size: 1.8vh;
+  font-style: italic;
+  line-height: 10px;
+  display: flex;
+  gap: 5px;
 }
 
-.headerBoxPage div:last-child{
-    width: 80%;
-    text-align: start;
-    color: var(--font-color-6);
-    font-size: 2vh;
+.headerBoxPage div:last-child {
+  width: 80%;
+  text-align: start;
+  color: var(--font-color-2);
+  font-size: 2.2vh;
+  font-weight: 900;
 }
 
-.selectBorder{
-    border-bottom: solid 0.8vh var(--color-3);
-    animation: upBorder 0.5s;
+.headerBoxPage.finished svg {
+  font-size: 0.8em;
+  color: var(--font-color-2);
+}
+
+.headerBoxPage:not(.finished) svg {
+  display: none;
+}
+
+.selectBorder {
+  border-bottom: solid 1vh var(--color-3);
+  animation: upBorder 0.5s;
 }
 
 @keyframes upBorder {
-    0%{
-        border-bottom: solid 0vh var(--color-3);
-    }
-    100%{
-        border-bottom: solid 0.8vh var(--color-3);
-    } 
+  0% {
+    border-bottom: solid 0vh var(--color-3);
+  }
+  100% {
+    border-bottom: solid 0.8vh var(--color-3);
+  }
 }

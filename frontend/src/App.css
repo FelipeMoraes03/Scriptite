@@ -1,56 +1,60 @@
-:root{
-    --color-1: #DBDBDB;
-    --color-2: #F2F1FA;
-    --color-3: #5D5A88;
+:root {
+  --color-1: #dbdbdb;
+  --color-2: #f2f1fa;
+  --color-3: #5d5a88;
 
-    --font-color-1:#FFFFFF;
-    --font-color-2:#5D5A88;
-    --font-color-3:#858585;
-    --font-color-4:#9795B5;
-    --font-color-5:#717171;
-    --font-color-6:#242424;
-    --font-color-7:#343434;
+  --font-color-1: #ffffff;
+  --font-color-2: #5d5a88;
+  --font-color-3: #858585;
+  --font-color-4: #9795b5;
+  --font-color-5: #717171;
+  --font-color-6: #242424;
+  --font-color-7: #343434;
 
+  --font-family: 'DM Sans', sans-serif;
 }
 
-.fontColor1{
-    color: var(--font-color-1);
+.fontColor1 {
+  color: var(--font-color-1);
 }
 
-.fontColor2{
-    color: var(--font-color-2);
+.fontColor2 {
+  color: var(--font-color-2);
 }
 
-.fontColor3{
-    color: var(--font-color-3);
+.fontColor3 {
+  color: var(--font-color-3);
 }
 
-.fontColor4{
-    color: var(--font-color-4);
+.fontColor4 {
+  color: var(--font-color-4);
 }
 
-.fontSize1{
-    font-size: 4vh;
+.fontSize1 {
+  font-size: 4vh;
 }
 
-.fontSize2{
-    font-size: 5vh;
+.fontSize2 {
+  font-size: 5vh;
 }
 
-.fontWeigth1{
-    font-weight: 700;
+.fontWeigth1 {
+  font-weight: 700;
 }
 
-button{
-    background-color: #5D5A88;
-    color: #FFFFFF;
-    border-radius: 4px;
-    align-items: center;
+main,
+body {
+  font-family: var(--font-family);
+  overflow-x: hidden;
 }
 
-button:hover{
-    background-color: #4a43ab;
+button {
+  background-color: #5d5a88;
+  color: #ffffff;
+  border-radius: 4px;
+  align-items: center;
 }
 
-
-
+button:hover {
+  background-color: #4a43ab;
+}
