@@ -10,7 +10,7 @@ creative_cache = {
     "creative": ""
 }
 
-def generate_creative_stream(data):
+def generate_creative_stream(data, client_sid):
     prompt = generate_creative_prompt(data)
 
     gpt_response = openai.ChatCompletion.create(
@@ -28,9 +28,9 @@ def generate_creative_stream(data):
             for chunk in gpt_response:
                 if chunk['choices'][0]['delta'] != {}:
                     creative_chunk = chunk['choices'][0]['delta']['content']
-                    socketio.emit('creative_chunk', {"creative": creative_chunk})
+                    socketio.emit('creative_chunk', {"creative": creative_chunk}, room=client_sid)
                     generated_creative += creative_chunk
-            socketio.emit('creative_streaming_complete')
+            socketio.emit('creative_streaming_complete', room=client_sid)
 
         creative_cache['creative'] = generated_creative
 
