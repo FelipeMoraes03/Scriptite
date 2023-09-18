@@ -239,10 +239,10 @@ function ShowCreative(props) {
 
 function ScriptPageButton(props) {
   const navigate = useNavigate();
-  const creative = props.creative
+  const infos = [props.creative]
 
   const handleScriptPage = () => {
-    navigate('/script', { state: { creative } });
+    navigate('/script', { state: { infos } });
   };
 
   const scriptClick = async () => {

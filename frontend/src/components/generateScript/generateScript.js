@@ -23,7 +23,7 @@ function Main() {
             </div>
             <div className='flex flex-col items-center content-center'>
                 <ShowScript text={script}/>
-                <StoryBoardPageButton script={script} text={"PRÓXIMO"}/>
+                <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
             </div>
 
         </main>
@@ -61,7 +61,8 @@ function GenerateButton(props) {
 
 function ShowCreative(props) {
     const location = useLocation()
-    const creative = location.state?.creative
+    const infos = location.state?.infos
+    const creative = infos[0]
     props.setCreative(creative)
 
     return (
@@ -79,10 +80,10 @@ function ShowScript(props) {
 
 function StoryBoardPageButton(props) {
     const navigate = useNavigate();
-    const script = props.script
+    const infos = [props.creative, props.script]
   
     const handleStoryBoardPage = () => {
-      navigate('/story-board', { state: { script } });
+      navigate('/story-board', { state: { infos } });
     };
 
     const storyBoardClick = async () => {

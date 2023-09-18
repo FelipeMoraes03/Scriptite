@@ -8,6 +8,7 @@ import Header from '../header/header.js';
 const socket = io('http://localhost:5001');
 
 function Main() {
+    const [creative, setCreative] = useState("")
     const [script, setScript] = useState("");
     const [urlImages, setUrlImages] = useState(["", "", "", ""]);
     const [scenesPrompt, setScenesPrompt] = useState([]);
@@ -26,12 +27,12 @@ function Main() {
             <Header screen={3}/>
 
             <div className='flex flex-col items-center content-center'>
-                <ShowScript script={script} setScript={setScript}/>
+                <ShowScript setCreative={setCreative} script={script} setScript={setScript}/>
                 <GenerateButton input={script} urlImages={urlImages} setImagesUnit={setUrlImages} setImages={setConcatenatedImages} scenes={scenesPrompt} setScenes={setScenesPrompt} text={"GERAR STORY BOARD"}/>
             </div>
             <div className='flex flex-col items-center content-center'>
                 <ShowStoryBoard text={concatenatedImages}/>
-                <ResultsPageButton storyBoard={concatenatedImages} text={"PRÓXIMO"}/>
+                <ResultsPageButton creative={creative} script={script} storyBoard={concatenatedImages} text={"PRÓXIMO"}/>
             </div>
         </main>
     );
@@ -114,8 +115,11 @@ function GenerateButton(props) {
 
 function ShowScript(props) {
     const location = useLocation()
-    const script = location.state?.script
+    const infos = location.state?.infos
+    const script = infos[1]
+    const creative = infos[0]
     props.setScript(script)
+    props.setCreative(creative)
 
     return (
         <p className='showScript' dangerouslySetInnerHTML={{ __html: script }}></p>
@@ -132,10 +136,10 @@ function ShowStoryBoard(props) {
 
 function ResultsPageButton(props) {
     const navigate = useNavigate();
-    const storyBoard = props.storyBoard
+    const infos = [props.creative, props.script, props.storyBoard]
 
     const handleResultsPage = () => {
-      navigate('/result', { state: { storyBoard } });
+      navigate('/result', { state: { infos } });
     };
 
     return (
