@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import io from 'socket.io-client'
 import './generateCreative.css'
@@ -9,17 +9,7 @@ import { FaArrowRight, FaHourglassStart } from 'react-icons/fa'
 const socket = io('http://localhost:5001')
 
 function Main() {
-  const [keyWordInput, setKeyWordInput] = useState([
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    ''
-  ])
+  const [keyWordInput, setKeyWordInput] = useState(['', '', '', '', '', '', '', '', ''])
   const [creative, setCreative] = useState('')
 
   return (
@@ -248,6 +238,13 @@ function ShowCreative(props) {
 }
 
 function ScriptPageButton(props) {
+  const navigate = useNavigate();
+  const creative = props.creative
+
+  const handleScriptPage = () => {
+    navigate('/script', { state: { creative } });
+  };
+
   const scriptClick = async () => {
     if (props.creative === '') {
       alert('É necessário gerar um criativo antes de avançar')
@@ -259,9 +256,7 @@ function ScriptPageButton(props) {
       {props.creative === '' ? (
         <button onClick={scriptClick}>{props.text}</button>
       ) : (
-        <Link to={`/script`}>
-          <button className="buttonNext">{props.text}</button>
-        </Link>
+        <button className="buttonNext" onClick={handleScriptPage}>{props.text}</button>
       )}
     </next>
   )

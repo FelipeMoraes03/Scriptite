@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import io from 'socket.io-client';
 import './generateStoryBoard.css';
@@ -31,7 +31,7 @@ function Main() {
             </div>
             <div className='flex flex-col items-center content-center'>
                 <ShowStoryBoard text={concatenatedImages}/>
-                <StoryBoardPageButton script={script} text={"PRÓXIMO"}/>
+                <ResultsPageButton storyBoard={concatenatedImages} text={"PRÓXIMO"}/>
             </div>
         </main>
     );
@@ -113,23 +113,12 @@ function GenerateButton(props) {
 }
 
 function ShowScript(props) {
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get("http://localhost:5001/script");
-                let scriptAux = JSON.stringify(res.data.script)
-                scriptAux = scriptAux.substring(1, scriptAux.length - 1);
-                props.setScript(scriptAux);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchData();
-    }, []);
+    const location = useLocation()
+    const script = location.state?.script
+    props.setScript(script)
 
     return (
-        <p className='showScript' dangerouslySetInnerHTML={{ __html: props.script }}></p>
+        <p className='showScript' dangerouslySetInnerHTML={{ __html: script }}></p>
     );
 }
 
@@ -141,12 +130,17 @@ function ShowStoryBoard(props) {
     );
 }
 
-function StoryBoardPageButton(props) {
+function ResultsPageButton(props) {
+    const navigate = useNavigate();
+    const storyBoard = props.storyBoard
+
+    const handleResultsPage = () => {
+      navigate('/result', { state: { storyBoard } });
+    };
+
     return (
         <next>
-            <Link to={`/result`}>
-                <button className='button-home'>{props.text}</button>
-            </Link>
+            <button className='button-home' onClick={handleResultsPage}>{props.text}</button>
         </next>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import io from 'socket.io-client';
 import './generateScript.css';
@@ -60,23 +60,12 @@ function GenerateButton(props) {
 }
 
 function ShowCreative(props) {
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get("http://localhost:5001/creative");
-                let creativeAux = JSON.stringify(res.data.creative)
-                creativeAux = creativeAux.substring(1, creativeAux.length - 1);
-                props.setCreative(creativeAux);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchData();
-    }, []);
+    const location = useLocation()
+    const creative = location.state?.creative
+    props.setCreative(creative)
 
     return (
-        <p className='showScript' dangerouslySetInnerHTML={{ __html: props.creative }}></p>
+        <p className='showScript' dangerouslySetInnerHTML={{ __html: creative }}></p>
     );
 }
 
@@ -89,6 +78,13 @@ function ShowScript(props) {
 }
 
 function StoryBoardPageButton(props) {
+    const navigate = useNavigate();
+    const script = props.script
+  
+    const handleStoryBoardPage = () => {
+      navigate('/story-board', { state: { script } });
+    };
+
     const storyBoardClick = async () => {
         if (props.script === "") {
             alert("É necessário gerar um script antes de avançar");
@@ -100,9 +96,7 @@ function StoryBoardPageButton(props) {
             {props.script === "" ? (
                 <button className='button-home' onClick={storyBoardClick}>{props.text}</button>
             ) : (
-                <Link to={`/story-board`}>
-                    <button className='button-home'>{props.text}</button>
-                </Link>
+                <button className='button-home' onClick={handleStoryBoardPage}>{props.text}</button>
             )}
         </next>
     );
