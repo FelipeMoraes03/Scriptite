@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import './generateScript.css';
 import Header from '../header/header.js';
 
-const socket = io('http://localhost:5001');
+import socket from '../common/socket'
 
 function Main() {
     const [creative, setCreative] = useState("");
