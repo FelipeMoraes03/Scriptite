@@ -10,7 +10,7 @@ story_board_cache = {
     "story_board": []
 }
 
-def generate_scene_prompt(data):
+def generate_scene_prompt(data, client_sid):
     prompt = PROMPT_STORY_BOARD + data['script']
     #prompt = PROMPT_STORY_BOARD + PROMPT_TESTE
 
@@ -29,9 +29,9 @@ def generate_scene_prompt(data):
             for chunk in gpt_response:
                 if chunk['choices'][0]['delta'] != {}:
                     story_board_chunk = chunk['choices'][0]['delta']['content']
-                    socketio.emit('story_board_chunk', {"story_board": story_board_chunk})
+                    socketio.emit('story_board_chunk', {"story_board": story_board_chunk}, room=client_sid)
                     generated_story_board += story_board_chunk
-            socketio.emit('story_board_streaming_complete')
+            socketio.emit('story_board_streaming_complete', room=client_sid)
         
         print(generated_story_board)
 

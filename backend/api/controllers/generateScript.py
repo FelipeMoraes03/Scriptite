@@ -10,7 +10,7 @@ script_cache = {
     "script": ""
 }
 
-def generate_script_stream(data):
+def generate_script_stream(data, client_sid):
     prompt = PROMPT_SCRIPT + data['creative']
     
     gpt_response = openai.ChatCompletion.create(
@@ -28,9 +28,9 @@ def generate_script_stream(data):
             for chunk in gpt_response:
                 if chunk['choices'][0]['delta'] != {}:
                     script_chunk = chunk['choices'][0]['delta']['content']
-                    socketio.emit('script_chunk', {"script": script_chunk})
+                    socketio.emit('script_chunk', {"script": script_chunk}, room=client_sid)
                     generated_script += script_chunk
-            socketio.emit('script_streaming_complete')
+            socketio.emit('script_streaming_complete', room=client_sid)
 
         script_cache['script'] = generated_script
 

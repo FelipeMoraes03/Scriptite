@@ -32,7 +32,7 @@ def get_creative_call():
 
 @socketio.on('generate_script')
 def generate_script_call(data):
-    return generate_script_stream(data)
+    return generate_script_stream(data, request.sid)
 
 @app.route('/script', methods=['GET'])
 def get_script_call():
@@ -40,7 +40,7 @@ def get_script_call():
 
 @socketio.on('story_board')
 def generate_scene_prompt_call(data):
-    return generate_scene_prompt(data)
+    return generate_scene_prompt(data, request.sid)
 
 @app.route('/story-board', methods=['POST'])
 def generate_scene_image_call():
