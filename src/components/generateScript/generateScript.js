@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import io from 'socket.io-client';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './generateScript.css';
-import Header from '../header/header.js';
+import Header from '../header/header';
 
-import socket from '../common/socket'
+import openai from '../common/openai'
+import prompts from '../common/prompt'
+const promptScript = prompts[1]
 
 function Main() {
     const [creative, setCreative] = useState("");
@@ -35,15 +35,24 @@ function GenerateButton(props) {
     let updatedScript = ""
     async function generateScriptClick() {
         try {
-            socket.emit('generate_script', {
-                creative: props.input,
-            });
+            let prompt = promptScript;
+            prompt = prompt + props.input;
 
-            socket.on('script_chunk', (chunk) => {
-                updatedScript = updatedScript + chunk.script;
-                const formattedScript = updatedScript.replace(/\n/g, "<br />");
-                props.setScript(formattedScript);
+            const completion = await openai.chat.completions.create({
+                model: "gpt-3.5-turbo",
+                messages: [
+                  {"role": "user", "content": prompt}
+                ],
+                stream: true,
             });
+            
+              for await (const chunk of completion) {
+                if (chunk.choices[0].delta.content) {
+                  updatedScript = updatedScript + chunk.choices[0].delta.content
+                  const formattedScript = updatedScript.replace(/\n/g, '<br />')
+                  props.setScript(formattedScript)
+                }
+              }
 
         } catch (err) {
             console.error(err);

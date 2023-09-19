@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import io from 'socket.io-client'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './generateCreative.css'
 import Header from '../header/header'
 import { FaArrowRight, FaHourglassStart } from 'react-icons/fa'
 
-import socket from '../common/socket'
+import openai from '../common/openai'
+import prompts from '../common/prompt'
+const promptCreative = prompts[0]
 
 function Main() {
   const [keyWordInput, setKeyWordInput] = useState(['', '', '', '', '', '', '', '', ''])
@@ -143,7 +143,6 @@ function KeyWord(props) {
 
 function GenerateButton(props) {
   let updatedCreative = ''
-
   async function generateCreativeClick() {
     if (props.input.includes('')) {
       alert('Todos os campos precisam ser preenchidos')
@@ -156,23 +155,33 @@ function GenerateButton(props) {
       document.getElementById('obc22').classList.add('obc2-2')
 
       try {
-        socket.emit('generate_creative', {
-          product_name: props.input[0],
-          public_target: props.input[1],
-          pains: props.input[2],
-          needs: props.input[3],
-          solution: props.input[4],
-          product_format: props.input[5],
-          diferential: props.input[6],
-          product_objectives: props.input[7],
-          price: props.input[8]
-        })
+        let prompt = promptCreative;
+        prompt = prompt + "- Nome do produto: " + props.input[0] + "\n";
+        prompt = prompt + "- Nicho e Público-Alvo: " + props.input[1] + "\n";
+        prompt = prompt + "- Que Dor o publico tem: " + props.input[2] + "\n";
+        prompt = prompt + "- Necessidade/Desejos do publico: " + props.input[3] + "\n";
+        prompt = prompt + "- Como o produto resolve a dor: " + props.input[4] + "\n";
+        prompt = prompt + "- Formato do produto: " + props.input[5] + "\n";
+        prompt = prompt + "- Diferencial: " + props.input[6] + "\n";
+        prompt = prompt + "- Objetivos do produto: " + props.input[7] + "\n";
+        prompt = prompt + "- Preço da oferta: " + props.input[8] + "\n";
 
-        socket.on('creative_chunk', chunk => {
-          updatedCreative = updatedCreative + chunk.creative
-          const formattedCreative = updatedCreative.replace(/\n/g, '<br />')
-          props.setCreative(formattedCreative)
-        })
+        const completion = await openai.chat.completions.create({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {"role": "user", "content": prompt}
+          ],
+          stream: true,
+        });
+      
+        for await (const chunk of completion) {
+          if (chunk.choices[0].delta.content) {
+            updatedCreative = updatedCreative + chunk.choices[0].delta.content
+            const formattedCreative = updatedCreative.replace(/\n/g, '<br />')
+            props.setCreative(formattedCreative)
+          }
+        }
+      
       } catch (err) {
         console.error(err)
         alert(err)
@@ -190,18 +199,18 @@ function GenerateButton(props) {
   )
 }
 
-// function ShowCreative(props) {
-//   const creative = props.text
+/*function ShowCreative(props) {
+  const creative = props.text
 
-//   return (
-//     <creative>
-//       <p
-//         className="showCreative"
-//         dangerouslySetInnerHTML={{ __html: creative }}
-//       ></p>
-//     </creative>
-//   )
-// }
+  return (
+    <creative>
+      <p
+        className="showCreative"
+        dangerouslySetInnerHTML={{ __html: creative }}
+      ></p>
+    </creative>
+  )
+}*/
 
 function ShowCreative(props) {
   const creative = props.text

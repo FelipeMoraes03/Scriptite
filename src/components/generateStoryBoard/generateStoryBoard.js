@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import io from 'socket.io-client';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './generateStoryBoard.css';
-import Header from '../header/header.js';
+import Header from '../header/header';
 
-import socket from '../common/socket'
+import openai from '../common/openai'
+import prompts from '../common/prompt'
+const promptStoryBoard = prompts[2]
 
 function Main() {
     const [creative, setCreative] = useState("")
     const [script, setScript] = useState("");
-    const [urlImages, setUrlImages] = useState(["", "", "", ""]);
+    const [urlImages, setUrlImages] = useState([]);
     const [scenesPrompt, setScenesPrompt] = useState([]);
     const [concatenatedImages, setConcatenatedImages] = useState("");
 
@@ -19,7 +19,7 @@ function Main() {
         document.getElementById('hbp2').classList.add('selectBorder');
         document.getElementById('hbp3').classList.remove('selectBorder');
         document.getElementById('hbp4').classList.remove('selectBorder');  
-      });
+    });
 
     return (
         <main className>
@@ -40,65 +40,41 @@ function Main() {
 export default Main;
 
 function GenerateButton(props) {
-    const [storyBoardPrompt, setStoryBoardPrompt] = useState('');
-    const [streamingComplete, setStreamingComplete] = useState(false);
-
-    useEffect(() => {
-        // Quando streamingComplete for true, faça a requisição POST
-        if (streamingComplete) {
-            setStreamingComplete(false);
-
-            let dallePrompts = storyBoardPrompt.split(/PROMPT SCENE /);
-
-            let prompt = "";
-            for (let index = 1; index < dallePrompts.length; index++) {
-                // CRIA AS IMAGENS A PARTIR DOS PROMPTS
-                prompt = dallePrompts[index];
-                const callDalle = async () => {
-                    try {
-                        const res = await axios.post("http://localhost:5001/story-board", {
-                            "scene": prompt
-                        });
-
-                        if (res.status === 200) {
-                            let scene = JSON.stringify(res.data.scene);
-                            let idx = scene.substring(2, 3);
-                            idx = parseInt(idx)-1;
-                            scene = scene.substring(6, scene.length - 2);
-
-                            let updatedUrl = props.urlImages
-                            updatedUrl[idx] = scene;
-                            props.setImagesUnit(updatedUrl); //NÃO ESTÁ GUARDANDO AS URLS, APENAS 1
-                            props.setImages(updatedUrl.join('<br><br>'));
-                        }
-                    } catch (err) {
-                        console.error(err);
-                        alert(err);
-                    }
-                };
-
-                callDalle();
-            }
-        }
-    }, [streamingComplete, storyBoardPrompt, props]);
-
-    const generateStoryBoardClick = () => {
+    async function generateStoryBoardClick() {
         let updatedStoryBoard = ""
         try {
-            // GERA OS PROMPTS PARA SEREM PASSADOS PRO DALLE
-            socket.emit('story_board', {
-                script: props.input,
-            });
+                // GERA OS PROMPTS PARA SEREM PASSADOS PRO DALLE
+                let prompt = promptStoryBoard;
+                prompt = prompt + props.input;
 
-            socket.on('story_board_chunk', (chunk) => {
-                updatedStoryBoard = updatedStoryBoard + chunk.story_board
-                setStoryBoardPrompt(updatedStoryBoard);
-            });
+                const completion = await openai.chat.completions.create({
+                    model: "gpt-3.5-turbo",
+                    messages: [
+                    {"role": "user", "content": prompt}
+                    ],
+                    stream: true,
+                });
+                
+                for await (const chunk of completion) {
+                    if (chunk.choices[0].delta.content) {
+                        updatedStoryBoard = updatedStoryBoard + chunk.choices[0].delta.content
+                        props.setImages(updatedStoryBoard.split(/PROMPT SCENE /).filter(item => item.trim() !== "").join('<br><br>'))
+                    }
+                }
 
-            socket.on('story_board_streaming_complete', () => {
-                setStreamingComplete(true);
-            });
-
+                let dallePrompts = updatedStoryBoard.split(/PROMPT SCENE /).filter(item => item.trim() !== "");
+                let updatedUrl = dallePrompts
+                props.setImages(updatedUrl.join('<br><br>'))
+                for (let index = 0; index < dallePrompts.length; index++) {
+                    // CRIA AS IMAGENS A PARTIR DOS PROMPTS
+                    const image = await openai.images.generate({
+                        prompt: dallePrompts[index]
+                    });
+                    updatedUrl[index] = image.data[0].url
+                    props.setImagesUnit(updatedUrl);
+                    props.setImages(updatedUrl.join('<br><br>'));
+                }
+              
         } catch (err) {
             console.error(err);
             alert(err);
