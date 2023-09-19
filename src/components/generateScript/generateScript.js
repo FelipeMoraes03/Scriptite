@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './generateScript.css';
 import Header from '../header/header';
+import { FaArrowRight, FaHourglassStart } from 'react-icons/fa';
 
 import openai from '../common/openai'
 import prompts from '../common/prompt'
@@ -12,21 +13,26 @@ function Main() {
     const [script, setScript] = useState("");
 
     return (
-        
-        <main>
-
+        <div>
             <Header screen={2}/>
 
-            <div className='flex flex-col items-center content-center'>
-                <ShowCreative creative={creative} setCreative={setCreative}/>
-                <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"}/>
+            <div className="bodyCreative backgroundColor1">
+                <div className="creativeBox">
+                    <ShowCreative creative={creative} setCreative={setCreative}/>
+                    <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"}/>
+                </div>
+                <div id="icon" className="fontColor2">
+                    <FaArrowRight />
+                </div>
+                <div className="creativeBox obc1" id="outputBoxCreative">
+                    <ShowScript text={script}/>
+                    <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
+                </div>
             </div>
-            <div className='flex flex-col items-center content-center'>
-                <ShowScript text={script}/>
-                <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
+            <div className=" footer fontColor4">
+                Copyright © 2023 | Todos os direitos reservados
             </div>
-
-        </main>
+        </div>
     );
 }
 export default Main;
@@ -62,7 +68,7 @@ function GenerateButton(props) {
 
     return (
         <generate>
-            <button className='button-home' onClick={generateScriptClick}>{props.text}</button>
+            <button className='creaButton' onClick={generateScriptClick}>{props.text}</button>
             <div>{props.creative}</div>
         </generate>
     );
@@ -75,7 +81,7 @@ function ShowCreative(props) {
     props.setCreative(creative)
 
     return (
-        <p className='showScript' dangerouslySetInnerHTML={{ __html: creative }}></p>
+        <p className='showCreative' dangerouslySetInnerHTML={{ __html: creative }}></p>
     );
 }
 
@@ -83,7 +89,7 @@ function ShowScript(props) {
     const script = props.text;
     
     return (
-        <p className='showScript' dangerouslySetInnerHTML={{ __html: script }}></p>
+        <p className='showCreative' dangerouslySetInnerHTML={{ __html: script }}></p>
     );
 }
 
@@ -104,9 +110,9 @@ function StoryBoardPageButton(props) {
     return (
         <next>
             {props.script === "" ? (
-                <button className='button-home' onClick={storyBoardClick}>{props.text}</button>
+                <button className='creaButton' onClick={storyBoardClick}>{props.text}</button>
             ) : (
-                <button className='button-home' onClick={handleStoryBoardPage}>{props.text}</button>
+                <button className='creaButton' onClick={handleStoryBoardPage}>{props.text}</button>
             )}
         </next>
     );
