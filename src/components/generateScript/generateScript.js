@@ -57,10 +57,8 @@ return (
         <FaArrowRight />
     </div>
     <div className="creativeBox obc1" id="outputBoxCreative">
-
         <ShowScript text={script} />
-        <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"} />
-    
+        <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
     </div>
     </div>
     <div className=" footer fontColor4">
