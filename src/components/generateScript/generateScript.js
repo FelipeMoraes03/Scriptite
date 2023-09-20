@@ -49,9 +49,11 @@ return (
 
     <div className="bodyCreative backgroundColor1">
     <div className="creativeBox">
+      <div>
         {camposDeTexto}
         <ShowCreative creative={creative} setCreative={setCreative} hidden={true} />
         <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"} />
+      </div>
     </div>
     <div id="icon" className="fontColor2">
         <FaArrowRight />
@@ -59,7 +61,7 @@ return (
     <div className="creativeBox obc1" id="outputBoxCreative">
         <ShowScript text={script} />
         <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
-    </div>
+    </div>    
     </div>
     <div className=" footer fontColor4">
     Copyright © 2023 | Todos os direitos reservados
