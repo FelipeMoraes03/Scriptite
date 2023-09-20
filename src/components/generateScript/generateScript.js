@@ -19,19 +19,28 @@ setCreative(novasPartes.join('<br /><br />'));
 }
 
 const camposDeTexto = creative.split('<br /><br />').map((parte, index) => {
-// Se a parte incluir um ": ", consideramos que é um rótulo e separamos em rótulo e conteúdo
-const [rotulo, conteudo] = parte.split(': ');
-return (
-    <div key={index}>
-    {rotulo && <p><strong>{rotulo}:</strong></p>}
-    <InputField
-        label={rotulo ? "" : `Criativo selecionado:`}
-        value={conteudo || parte}
-        setValue={novaParte => atualizarParte(novaParte, index)}
-    />
-    </div>
-);
-});
+    const [rotulo, conteudo] = parte.split(': ');
+  
+    if (rotulo === "Criativo 1") {
+      return(
+        <>
+        <span id="identifierCreative" className="inputBox">{rotulo}</span>
+        </>
+      );
+    }
+  
+    return (
+      <div key={index}>
+        {rotulo && <p><strong>{rotulo}:</strong></p>}
+        <InputField
+          label={rotulo ? "" : `Criativo selecionado:`}
+          value={conteudo || parte}
+          setValue={novaParte => atualizarParte(novaParte, index)}
+        />
+      </div>
+    );
+  });
+  
 
 
 return (
@@ -41,15 +50,17 @@ return (
     <div className="bodyCreative backgroundColor1">
     <div className="creativeBox">
         {camposDeTexto}
-        <ShowCreative creative={creative} setCreative={setCreative} />
+        <ShowCreative creative={creative} setCreative={setCreative} hidden={true} />
         <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"} />
     </div>
     <div id="icon" className="fontColor2">
         <FaArrowRight />
     </div>
     <div className="creativeBox obc1" id="outputBoxCreative">
+
         <ShowScript text={script} />
         <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"} />
+    
     </div>
     </div>
     <div className=" footer fontColor4">
@@ -60,14 +71,19 @@ return (
 }
 
 function InputField(props) {
-return (
-<div className="inputBox">
-    <label>{props.label}</label>
-    <input type="text" value={props.value} onChange={e => props.setValue(e.target.value)} />
-</div>
-);
-}
-
+    return (
+      <div className="inputBox">
+        <num>{props.label}</num>
+        {props.value === "Criativo 1" ? (
+          <span className="inputBox">{props.value}</span>
+        ) : (
+          <span className="input">{props.value}</span>
+        )}
+      </div>
+    );
+  }
+  
+  
 export default Main;
 
 function GenerateButton(props) {  
@@ -108,15 +124,17 @@ return (
 }
 
 function ShowCreative(props) {
-const location = useLocation()
-const infos = location.state?.infos
-const creative = infos[0]
-props.setCreative(creative)
-
-return (
-<p className='showCreative' dangerouslySetInnerHTML={{ __html: creative }}></p>
-);
-}
+    const location = useLocation();
+    const infos = location.state?.infos;
+    const creative = infos[0];
+    props.setCreative(creative);
+  
+    return (
+        //gambiarra para desativar o show creative do return da tela principal  <ShowCreative creative={creative} setCreative={setCreative} hidden={true} /> sem apaga-lo pois precisamos dele kk 
+      <p className='showCreative' style={{ display: props.hidden ? 'none' : 'block' }} dangerouslySetInnerHTML={{ __html: creative }}></p>
+    );
+  }
+  
 
 function ShowScript(props) {
 const script = props.text;
