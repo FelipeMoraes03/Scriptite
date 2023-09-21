@@ -144,6 +144,44 @@ return (
 );
 }
 
+//--------------------------------versão para consertar o codigo é estilizar que nem o criativo--------------------------------//
+
+// function ShowScript(props) {
+//   const script = props.text;
+//   const scriptParts = script.split('<br /><br />');
+//   const paragraphs = [];
+
+//   if (scriptParts.length > 1) {
+//     scriptParts.forEach(element => {
+//       const [key, value] = element.split(': ');
+
+//       if (key.localeCompare('Criativo 1') === 0) {
+//         paragraphs.push(
+//           <div id="identifierCreative" key={key}>
+//             <p className="title">{key}</p>
+//             <hr />
+//           </div>
+//         );
+//       } else {
+//         paragraphs.push(
+//           <div className="responseItem" key={key}>
+//             <label className="title">{key}:</label>
+//             <p className="value input">{value}</p>
+//           </div>
+//         );
+//       }
+//     });
+//   }
+
+//   return (
+//     <script>
+//       <div className="showCreative">{paragraphs}</div>
+//     </script>
+//   );
+// }  
+
+//-----------------------------versão para consertar o codigo-------------------------------------//
+
 function StoryBoardPageButton(props) {
 const navigate = useNavigate();
 const infos = [props.creative, props.script]
