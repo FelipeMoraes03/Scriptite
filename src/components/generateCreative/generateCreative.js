@@ -199,19 +199,6 @@ function GenerateButton(props) {
   )
 }
 
-/*function ShowCreative(props) {
-  const creative = props.text
-
-  return (
-    <creative>
-      <p
-        className="showCreative"
-        dangerouslySetInnerHTML={{ __html: creative }}
-      ></p>
-    </creative>
-  )
-}*/
-
 function ShowCreative(props) {
   const creative = props.text
   const creativeParts = creative.split('<br /><br />')

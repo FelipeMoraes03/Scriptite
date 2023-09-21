@@ -31,7 +31,7 @@ const camposDeTexto = creative.split('<br /><br />').map((parte, index) => {
   
     return (
       <div key={index}>
-        {rotulo && <p><strong>{rotulo}:</strong></p>}
+        {rotulo && <p><strong className="inputBox">{rotulo}:</strong></p>}
         <InputField
           label={rotulo ? "" : `Criativo selecionado:`}
           value={conteudo || parte}
@@ -41,34 +41,63 @@ const camposDeTexto = creative.split('<br /><br />').map((parte, index) => {
     );
   });
   
-
-
 return (
-<div>
-    <Header screen={2} />
+    <div>
+        <Header screen={2} />
+    
+        <div className="bodyCreative backgroundColor1">
+        <div className="creativeBox">
+          <div>
+            {camposDeTexto}
+            <ShowCreative creative={creative} setCreative={setCreative} hidden={true} />
+            <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"} />
+          </div>
+        </div>
+        <div id="icon" className="fontColor2">
+            <FaArrowRight />
+        </div>
+        <div className="creativeBox obc11" id="outputBoxCreative">
+            <ShowScript text={script} />
+            <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
+        </div>    
+        </div>
+        <div className=" footer fontColor4">
+        Copyright © 2023 | Todos os direitos reservados
+        </div>
+    </div>
+    );
+    }
 
-    <div className="bodyCreative backgroundColor1">
-    <div className="creativeBox">
-      <div>
-        {camposDeTexto}
-        <ShowCreative creative={creative} setCreative={setCreative} hidden={true} />
-        <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"} />
-      </div>
-    </div>
-    <div id="icon" className="fontColor2">
-        <FaArrowRight />
-    </div>
-    <div className="creativeBox obc11" id="outputBoxCreative">
-        <ShowScript text={script} />
-        <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
-    </div>    
-    </div>
-    <div className=" footer fontColor4">
-    Copyright © 2023 | Todos os direitos reservados
-    </div>
-</div>
-);
-}
+// return (
+//     <div>
+//         <Header screen={2} />
+
+//         <div className="bodyCreative backgroundColor1">
+//             <div className="creativeBox">
+//                 <div>
+//                     {camposDeTexto}
+//                     <ShowCreative creative={creative} setCreative={setCreative} hidden={true} />
+//                     <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"} />
+//                 </div>
+//             </div>
+//             <div id="icon" className="fontColor2">
+//                 <FaArrowRight />
+//             </div>
+//             <div className="creativeBox obc1" id="outputBoxCreative">
+//                 <div id="obc22">
+//                     <ShowScript text={script} />
+//                 </div>
+//                 <div id="obc21">
+//                     <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
+//                 </div>
+//             </div>    
+//         </div>
+//         <div className=" footer fontColor4">
+//             Copyright © 2023 | Todos os direitos reservados
+//         </div>
+//     </div>
+// );
+// }
 
 function InputField(props) {
     return (
@@ -136,51 +165,52 @@ function ShowCreative(props) {
   }
   
 
-function ShowScript(props) {
-const script = props.text;
-
-return (
-<p className='showCreative' dangerouslySetInnerHTML={{ __html: script }}></p>
-);
-}
-
-//--------------------------------versão para consertar o codigo é estilizar que nem o criativo--------------------------------//
-
 // function ShowScript(props) {
 //   const script = props.text;
-//   const scriptParts = script.split('<br /><br />');
-//   const paragraphs = [];
-
-//   if (scriptParts.length > 1) {
-//     scriptParts.forEach(element => {
-//       const [key, value] = element.split(': ');
-
-//       if (key.localeCompare('Criativo 1') === 0) {
-//         paragraphs.push(
-//           <div id="identifierCreative" key={key}>
-//             <p className="title">{key}</p>
-//             <hr />
-//           </div>
-//         );
-//       } else {
-//         paragraphs.push(
-//           <div className="responseItem" key={key}>
-//             <label className="title">{key}:</label>
-//             <p className="value input">{value}</p>
-//           </div>
-//         );
-//       }
-//     });
+  
+//   return (
+//   <p className='showCreative' dangerouslySetInnerHTML={{ __html: script }}></p>
+//   );
 //   }
 
-//   return (
-//     <script>
-//       <div className="showCreative">{paragraphs}</div>
-//     </script>
-//   );
-// }  
+//--------------------------------versão para consertar ta quase chegando no 100%--------------------------------//
 
-//-----------------------------versão para consertar o codigo-------------------------------------//
+function ShowScript(props) {
+  const script = props.text;
+  const scriptLines = script.split('<br />');
+  const paragraphs = [];
+
+  scriptLines.forEach(line => {
+    const colonIndex = line.indexOf(':');
+    if (colonIndex !== -1) {
+      const key = line.slice(0, colonIndex);
+      const value = line.slice(colonIndex + 1).trim();
+      console.log(key, value);
+      if (key.localeCompare('Roteiro do criativo') === 0) {
+        paragraphs.push(
+          <div id="identifierCreative" key={key}>
+            <p className="title">{key}</p>
+            <hr />
+          </div>
+        );
+      } else {
+        paragraphs.push(
+          <div className="responseItem" key={key}>
+            <label className="title">{key}:</label>
+            <p className="value input">{value}</p>
+          </div>
+        );
+      }
+    }
+  });
+
+  return (
+    <div className="showCreative">{paragraphs}</div>
+  );
+}
+
+//--------------------------------versão para consertar ta quase chegando no 100%--------------------------------//
+
 
 function StoryBoardPageButton(props) {
 const navigate = useNavigate();
