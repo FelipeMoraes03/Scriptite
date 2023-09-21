@@ -88,7 +88,7 @@
 .obc11 {
   padding: 5% 5% 0% 5%;
   /* colocado um scroll */
-  overflow: scroll !important;
+  overflow-y: scroll !important;
   text-align: center;
 }
 

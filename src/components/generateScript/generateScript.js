@@ -24,7 +24,7 @@ const camposDeTexto = creative.split('<br /><br />').map((parte, index) => {
     if (rotulo === "Criativo 1") {
       return(
         <>
-        <span id="identifierCreative" className="inputBox">{rotulo}</span>
+        <span className="inputBox">{rotulo}</span>
         </>
       );
     }
@@ -46,7 +46,7 @@ return (
         <Header screen={2} />
     
         <div className="bodyCreative backgroundColor1">
-        <div className="creativeBox">
+        <div className="creativeBox obc11">
           <div>
             {camposDeTexto}
             <ShowCreative creative={creative} setCreative={setCreative} hidden={true} />
@@ -67,37 +67,6 @@ return (
     </div>
     );
     }
-
-// return (
-//     <div>
-//         <Header screen={2} />
-
-//         <div className="bodyCreative backgroundColor1">
-//             <div className="creativeBox">
-//                 <div>
-//                     {camposDeTexto}
-//                     <ShowCreative creative={creative} setCreative={setCreative} hidden={true} />
-//                     <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"} />
-//                 </div>
-//             </div>
-//             <div id="icon" className="fontColor2">
-//                 <FaArrowRight />
-//             </div>
-//             <div className="creativeBox obc1" id="outputBoxCreative">
-//                 <div id="obc22">
-//                     <ShowScript text={script} />
-//                 </div>
-//                 <div id="obc21">
-//                     <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
-//                 </div>
-//             </div>    
-//         </div>
-//         <div className=" footer fontColor4">
-//             Copyright © 2023 | Todos os direitos reservados
-//         </div>
-//     </div>
-// );
-// }
 
 function InputField(props) {
     return (
@@ -159,21 +128,11 @@ function ShowCreative(props) {
     props.setCreative(creative);
   
     return (
-        //gambiarra para desativar o show creative do return da tela principal  <ShowCreative creative={creative} setCreative={setCreative} hidden={true} /> sem apaga-lo pois precisamos dele kk 
       <p className='showCreative' style={{ display: props.hidden ? 'none' : 'block' }} dangerouslySetInnerHTML={{ __html: creative }}></p>
     );
   }
   
 
-// function ShowScript(props) {
-//   const script = props.text;
-  
-//   return (
-//   <p className='showCreative' dangerouslySetInnerHTML={{ __html: script }}></p>
-//   );
-//   }
-
-//--------------------------------versão para consertar ta quase chegando no 100%--------------------------------//
 
 function ShowScript(props) {
   const script = props.text;
@@ -209,7 +168,7 @@ function ShowScript(props) {
   );
 }
 
-//--------------------------------versão para consertar ta quase chegando no 100%--------------------------------//
+
 
 
 function StoryBoardPageButton(props) {
