@@ -58,7 +58,7 @@ return (
     <div id="icon" className="fontColor2">
         <FaArrowRight />
     </div>
-    <div className="creativeBox obc1" id="outputBoxCreative">
+    <div className="creativeBox obc11" id="outputBoxCreative">
         <ShowScript text={script} />
         <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
     </div>    

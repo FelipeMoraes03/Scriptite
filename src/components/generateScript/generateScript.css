@@ -80,8 +80,12 @@
   font-weight: 600;
   font-size: 2vh;
 }
-
 .obc1 {
+  padding: 35% 25% 0% 28%;
+  text-align: center;
+}
+
+.obc11 {
   padding: 5% 5% 0% 5%;
   /* colocado um scroll */
   overflow: scroll !important;
