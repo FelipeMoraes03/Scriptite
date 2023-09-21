@@ -134,39 +134,40 @@ function ShowCreative(props) {
   
 
 
-function ShowScript(props) {
-  const script = props.text;
-  const scriptLines = script.split('<br />');
-  const paragraphs = [];
-
-  scriptLines.forEach(line => {
-    const colonIndex = line.indexOf(':');
-    if (colonIndex !== -1) {
-      const key = line.slice(0, colonIndex);
-      const value = line.slice(colonIndex + 1).trim();
-      console.log(key, value);
-      if (key.localeCompare('Roteiro do criativo') === 0) {
-        paragraphs.push(
-          <div id="identifierCreative" key={key}>
-            <p className="title">{key}</p>
-            <hr />
-          </div>
-        );
-      } else {
-        paragraphs.push(
-          <div className="responseItem" key={key}>
-            <label className="title">{key}:</label>
-            <p className="value input">{value}</p>
-          </div>
-        );
+  function ShowScript(props) {
+    const script = props.text;
+    const scriptLines = script.split('<br />');
+    const paragraphs = [];
+  
+    scriptLines.forEach(line => {
+      const colonIndex = line.indexOf(':');
+      if (colonIndex !== -1) {
+        const key = line.slice(0, colonIndex);
+        const value = line.slice(colonIndex + 1).trim();
+        console.log(key, value);
+        if (key.localeCompare('Roteiro do criativo') === 0) {
+          paragraphs.push(
+            <div id="identifierCreative" key={key}>
+              <p className="title">{key}</p>
+              <hr />
+            </div>
+          );
+        } else {
+          paragraphs.push(
+            <div className="responseItem" key={key}>
+              <label className="title">{key}:</label>
+              {value && <p className="value input">{value}</p>}
+            </div>
+          );
+        }
       }
-    }
-  });
-
-  return (
-    <div className="showCreative">{paragraphs}</div>
-  );
-}
+    });
+  
+    return (
+      <div className="showCreative">{paragraphs}</div>
+    );
+  }
+  
 
 
 
