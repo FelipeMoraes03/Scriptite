@@ -152,7 +152,6 @@ function ShowScript({ text }) {
             return (
               <div id="identifierCreative" key={index}>
                 <p className="title">{key}</p>
-                <hr />
               </div>
             );
           } else {

@@ -273,12 +273,5 @@
 }
 
 .gambiarra {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  font-size: 1em;
-  font-weight: 500;
-  height: 100%;
-  color: #858585;
+  padding: 35% 25% 0% 28%;
 }
