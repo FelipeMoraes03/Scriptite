@@ -156,7 +156,7 @@ function ShowScript({ text }) {
             );
           } else {
             return (
-              <div className="responseItem" key={index}>
+              <div className="inputBox" key={index}>
                 <label className="title">{key}:</label>
                 {value && <p className="value input">{value}</p>}
               </div>
@@ -177,19 +177,14 @@ function StoryBoardPageButton({ creative, script, text }) {
   const handleStoryBoardPage = () => {
     navigate('/story-board', { state: { infos } });
   };
-
-  // Se o script estiver vazio, mostre a mensagem de carregamento
   if (script === "") {
     return (
-      //pq não ta pegandu kk 
       <div id="text1" className='gambiarra'>
         <FaHourglassStart />
-        Preencha as informações, clique em gerar criativo e aguarde.
+        Preencha as informações, clique em gerar script e aguarde.
       </div>
     );
   }
-
-  // Se o script não estiver vazio, mostre o botão e remova a div
   if (script !== "") {
     return (
       <next>
