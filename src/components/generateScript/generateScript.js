@@ -23,7 +23,7 @@ function Main() {
     if (rotulo === "Criativo 1") {
       return(
         <>
-        <span className="inputBox">{rotulo}</span>
+        <span className=" Sans'] text-[#5d5a88] font-['DM text-3xl font-bold leading">{rotulo}</span>
         </>
       );
     }
@@ -150,7 +150,7 @@ function ShowScript({ text }) {
           
           if (key.localeCompare('Roteiro do criativo') === 0) {
             return (
-              <div id="identifierCreative" key={index}>
+              <div id="identifierCreative" className="'Sans'] text-[#5d5a88] font-['DM text-3xl font-bold leading'" key={index}>
                 <p className="title">{key}</p>
               </div>
             );
@@ -179,9 +179,9 @@ function StoryBoardPageButton({ creative, script, text }) {
   };
   if (script === "") {
     return (
-      <div id="text1" className='gambiarra'>
+      <div id="text1" className='tex'>
         <FaHourglassStart />
-        Preencha as informações, clique em gerar script e aguarde.
+        Edite o Criativo se necessario, clique em gerar script e aguarde.
       </div>
     );
   }
