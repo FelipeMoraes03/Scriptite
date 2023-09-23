@@ -1,0 +1,13 @@
+.renderBox{
+    width: 73vw;
+    height: 70vh;
+    border-radius: 5px;
+    background-color:  var(--color-2);
+}
+
+.renderBody{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-top: 3%;
+}

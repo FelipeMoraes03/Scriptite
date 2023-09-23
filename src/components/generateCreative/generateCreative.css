@@ -1,5 +1,5 @@
 .bodyCreative {
-  height: 88vh;
+  height: 86vh;
 
   display: grid;
   grid-template-columns: 45vw 3vw 45vw;
@@ -10,19 +10,21 @@
 
 .creativeBox {
   width: 45.5vw;
-  height: 84vh;
+  height: 83vh;
   border-radius: 5px;
   background-color: var(--color-2);
   padding: 1.5vw;
+  padding-bottom: 0;
 }
 
-#icon {
+.icon {
   height: 80vh;
   width: 3.5vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 37vh;
+  color: var(--color-3);
 }
 
 #text1 {
@@ -160,13 +162,23 @@
   padding-right: 10px;
 }
 
+.titulo{
+  font-size: 2vh;
+  color: var(--font-color-2);
+}
+
+.valor{
+  font-size: 2vh;
+}
+
 /**/
 
 .footer {
-  padding-top: 0.4vh;
+  padding-top: 1.2vh;
   height: 4.75vh;
   width: 100vw;
   text-align: center;
-  font-size: 2vh;
+  font-size: 1.8vh;
   background-color: var(--color-1);
 }
+
