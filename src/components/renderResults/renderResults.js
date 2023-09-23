@@ -17,6 +17,15 @@ function RenderResult() {
     return (
         <div>
             <Header screen={4}/>
+
+            <div className='bodyCreative backgroundColor1 renderBody'>
+                <div className='renderBox'>
+
+                </div>
+            </div>
+            <div className=" footer fontColor4">
+                Copyright © 2023 | Todos os direitos reservados
+            </div>
         </div>
     );
 }

@@ -2,120 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-.obc11 {
-  padding: 5% 5% 0% 5%;
-  /* colocado um scroll */
-  overflow-y: scroll !important;
+.cb1 {
+
+  overflow-y: scroll;
   text-align: center;
-}
-
-.obc1 div:last-child {
-  font-size: 0;
-}
-
-.obc2 {
-  padding: 1vh;
-  height: 100%;
-}
-
-.obc2-1 {
-  height: 10%;
-}
-
-.obc2-1 div:first-child {
-  font-size: 5vh;
-  padding-left: 4%;
-}
-
-.obc2-1 div:last-child {
-  font-size: 3vh;
-  display: flex;
-  align-items: center;
-}
-
-.obc2 button {
-  margin: 2vh 1vw 0 1vw;
-  padding: 1.2vh;
-  width: 95%;
-  font-weight: 700;
-  font-size: 2vh;
-}
-
-.obc2-2 {
   height: 90%;
-  padding: 2%;
-  font-size: 3vh;
-  overflow-y: auto;
-  overflow-x: hidden;
+  width: 100%;
+}
+
+.cb12{
+  background-color: var(--color-1);
   border-radius: 5px;
-  color: var(--font-color-7);
+  padding: 1vw;
+  height: 90%;
+  border: solid 5px var(--color-1);
 }
 
-.showCreative #identifierCreative {
-  margin-bottom: 10px;
-}
-.showCreative #identifierCreative .title {
-  margin-bottom: 10px;
-}
-
-.showCreative #identifierCreative .title {
-  font-size: 3vh;
-  font-weight: 700;
-  color: #5d5a88;
-  text-align: center;
-}
-
-.showCreative .responseItem {
-  margin-bottom: 10px;
-}
-
-.showCreative .responseItem .title {
-  color: #5d5a88;
-  font-family: DM Sans;
-  font-size: 2vh;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 18px; /* 100% */
-}
-
-.showCreative .responseItem .value {
-  color: #343434;
-  font-family: DM Sans;
-  font-size: 12px;
-  font-style: normal;
-  line-height: 18px;
-  padding-right: 10px;
-}
 
 /**/
-
-.footer {
-  padding-top: 0.4vh;
-  height: 4.75vh;
-  width: 100vw;
-  text-align: center;
-  font-size: 2vh;
-  background-color: var(--color-1);
-}
-
-
-.bodyCreative {
-  height: 88vh;
-
-  display: grid;
-  grid-template-columns: 45vw 3vw 45vw;
-
-  padding: 1.2vw 3vw;
-  background-color: var(--color-1);
-}
-
-.creativeBox {
-  width: 45.5vw;
-  height: 84vh;
-  border-radius: 5px;
-  background-color: var(--color-2);
-  padding: 1.5vw;
-}
 
 #icon {
   height: 80vh;
@@ -141,10 +45,10 @@
   font-size: 1.5em;
 }
 
-/**/
+.inputBox2 {
 
-.inputBox {
   color: var(--font-color-2);
+  background-color: var(--color-1);
   font-weight: 700;
   display: flex;
   flex-direction: column;
@@ -153,125 +57,45 @@
   font-size: 2vh;
 }
 
-.creaButton {
-  margin-top: 1.2vh;
-  padding: 1.2vh;
+.input2 {
+  font-size: 2vh;
   width: 100%;
-  font-weight: 700;
-  font-size: 2vh;
-}
-
-.input {
-  font-size: 2vh;
-  width: 42.5vw;
   border-radius: 5px;
-  background: var(--color-1);
+  background: var(--color-2);
   padding-left: 3%;
   font-weight: 400;
   padding: 0.3vh 10px;
 }
 
-#outputBoxCreative {
-  overflow: hidden;
-  color: rgb(32, 0, 137);
-  font-weight: 600;
-  font-size: 2vh;
-}
+/**/
 
-.obc1 {
-  padding: 35% 25% 0% 28%;
-  text-align: center;
-}
-
-.obc1 div:last-child {
-  font-size: 0;
-}
-
-.obc2 {
-  padding: 1vh;
-  height: 100%;
-}
-
-.obc2-1 {
-  height: 10%;
-}
-
-.obc2-1 div:first-child {
-  font-size: 5vh;
-  padding-left: 4%;
-}
-
-.obc2-1 div:last-child {
-  font-size: 3vh;
-  display: flex;
-  align-items: center;
-}
-
-.obc2 button {
-  margin: 2vh 1vw 0 1vw;
-  padding: 1.2vh;
-  width: 95%;
+.inputBox3-1{
+  color: var(--font-color-2);
   font-weight: 700;
-  font-size: 2vh;
+  display: flex;  
+  flex-direction: column;
+  align-items: baseline;
+  margin-top: 3%;
+  font-size: 2.2vh;
 }
 
-.obc2-2 {
-  height: 90%;
-  padding: 2%;
-  font-size: 3vh;
-  overflow-y: auto;
-  overflow-x: hidden;
+.input3{
+  width: 99%;
+  font-size: 2vh;
   border-radius: 5px;
-  color: var(--font-color-7);
-}
-
-.showCreative #identifierCreative {
-  margin-bottom: 10px;
-}
-.showCreative #identifierCreative .title {
-  margin-bottom: 10px;
-}
-
-.showCreative #identifierCreative .title {
-  font-size: 3vh;
-  font-weight: 700;
-  color: #5d5a88;
-  text-align: center;
-}
-
-.showCreative .responseItem {
-  margin-bottom: 10px;
-}
-
-.showCreative .responseItem .title {
-  color: #5d5a88;
-  font-family: DM Sans;
-  font-size: 2vh;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 18px; /* 100% */
-}
-
-.showCreative .responseItem .value {
-  color: #343434;
-  font-family: DM Sans;
-  font-size: 12px;
-  font-style: normal;
-  line-height: 18px;
-  padding-right: 10px;
+  background: var(--color-1);
+  color:black;
+  padding-left: 3%;
+  font-weight: 400;
+  padding: 0.3vh 10px;
 }
 
 /**/
 
-.footer {
-  padding-top: 0.4vh;
-  height: 4.75vh;
-  width: 100vw;
-  text-align: center;
-  font-size: 2vh;
-  background-color: var(--color-1);
-}
-
 .tex {
   padding: 35% 25% 0% 28%;
+}
+
+.tiitle{
+  background-color: black;
 }

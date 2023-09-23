@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './generateStoryBoard.css';
 import Header from '../header/header';
+import {FaArrowRight, FaHourglassStart} from 'react-icons/fa'
 
 import openai from '../common/openai'
 import prompts from '../common/prompt'
@@ -26,13 +27,39 @@ function Main() {
 
             <Header screen={3}/>
 
-            <div className='flex flex-col items-center content-center'>
-                <ShowScript setCreative={setCreative} script={script} setScript={setScript}/>
-                <GenerateButton input={script} urlImages={urlImages} setImagesUnit={setUrlImages} setImages={setConcatenatedImages} scenes={scenesPrompt} setScenes={setScenesPrompt} text={"GERAR STORY BOARD"}/>
+            <div className='bodyCreative'>
+                <div className='creativeBox boxScript'>
+
+                    <h1 className='titleRoteiro'>
+                        Roteiro
+                    </h1>
+
+                    <ShowScript setCreative={setCreative} script={script} setScript={setScript}/>
+
+                    <GenerateButton input={script} urlImages={urlImages} setImagesUnit={setUrlImages} setImages={setConcatenatedImages} scenes={scenesPrompt} setScenes={setScenesPrompt} text={"Gerar storyboard"}/>
+
+                </div>
+                <div className='icon'>
+                   <FaArrowRight />
+                </div>
+                <div className='creativeBox boxScript'>
+                    
+                    <h1 className='titleRoteiro'>
+                        Storyboard
+                    </h1>
+
+                    <ShowStoryBoard text={concatenatedImages}/>
+                    <ResultsPageButton creative={creative} script={script} storyBoard={concatenatedImages} text={"Continuar"}/>
+
+                    <div id="tempText">
+                        <FaHourglassStart />
+                        Clique em gerar e aguarde.
+                    </div>
+                    
+                </div>
             </div>
-            <div className='flex flex-col items-center content-center'>
-                <ShowStoryBoard text={concatenatedImages}/>
-                <ResultsPageButton creative={creative} script={script} storyBoard={concatenatedImages} text={"PRÓXIMO"}/>
+            <div className=" footer fontColor4">
+                Copyright © 2023 | Todos os direitos reservados
             </div>
         </main>
     );
@@ -40,7 +67,11 @@ function Main() {
 export default Main;
 
 function GenerateButton(props) {
+
     async function generateStoryBoardClick() {
+
+        document.getElementById('tempText').remove();
+
         let updatedStoryBoard = ""
         try {
                 // GERA OS PROMPTS PARA SEREM PASSADOS PRO DALLE
@@ -83,7 +114,7 @@ function GenerateButton(props) {
 
     return (
         <generate>
-            <button className='button-home' onClick={generateStoryBoardClick}>{props.text}</button>
+            <button className='storyButton' onClick={generateStoryBoardClick}>{props.text}</button>
             <div>{props.script}</div>
         </generate>
     );
@@ -106,7 +137,7 @@ function ShowStoryBoard(props) {
     const script = props.text;
     
     return (
-        <p className='showScript' dangerouslySetInnerHTML={{ __html: script }}></p>
+        <p className='showStoryBoard' dangerouslySetInnerHTML={{ __html: script }}></p>
     );
 }
 
@@ -120,7 +151,7 @@ function ResultsPageButton(props) {
 
     return (
         <next>
-            <button className='button-home' onClick={handleResultsPage}>{props.text}</button>
+            <button className='storyButton' onClick={handleResultsPage}>{props.text}</button>
         </next>
     );
 }

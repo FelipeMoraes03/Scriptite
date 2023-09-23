@@ -73,7 +73,7 @@ function Main() {
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
               placeholderInput={'Informe aqui'}
-              description={'Quais os objetivos do seu produto?'}
+              description={'Quais os objetivos do anúncio?'}
             />
             <KeyWord
               numInput={9}
@@ -90,7 +90,7 @@ function Main() {
             />
           </div>
         </div>
-        <div id="icon" className="fontColor2">
+        <div  className="icon fontColor2">
           <FaArrowRight />
         </div>
         <div className="creativeBox obc1" id="outputBoxCreative">
@@ -107,7 +107,7 @@ function Main() {
           </div>
         </div>
       </div>
-      <div className=" footer fontColor4">
+      <div className="footer fontColor4">
         Copyright © 2023 | Todos os direitos reservados
       </div>
     </div>
@@ -163,7 +163,7 @@ function GenerateButton(props) {
         prompt = prompt + "- Como o produto resolve a dor: " + props.input[4] + "\n";
         prompt = prompt + "- Formato do produto: " + props.input[5] + "\n";
         prompt = prompt + "- Diferencial: " + props.input[6] + "\n";
-        prompt = prompt + "- Objetivos do produto: " + props.input[7] + "\n";
+        prompt = prompt + "- Objetivos do anuncio: " + props.input[7] + "\n";
         prompt = prompt + "- Preço da oferta: " + props.input[8] + "\n";
 
         const completion = await openai.chat.completions.create({
@@ -199,6 +199,19 @@ function GenerateButton(props) {
   )
 }
 
+/*function ShowCreative(props) {
+  const creative = props.text
+
+  return (
+    <creative>
+      <p
+        className="showCreative"
+        dangerouslySetInnerHTML={{ __html: creative }}
+      ></p>
+    </creative>
+  )
+}*/
+
 function ShowCreative(props) {
   const creative = props.text
   const creativeParts = creative.split('<br /><br />')
@@ -211,15 +224,15 @@ function ShowCreative(props) {
       if (key.localeCompare('Criativo 1') === 0) {
         paragraphs.push(
           <div id="identifierCreative">
-            <p className="title">{key}</p>
+            <p className="titulo">{key}</p>
             <hr />
           </div>
         )
       } else {
         paragraphs.push(
           <div className="responseItem">
-            <label className="title">{key}:</label>
-            <p className="value input">{value}</p>
+            <label className="titulo">{key}:</label>
+            <p className="valor input">{value}</p>
           </div>
         )
       }

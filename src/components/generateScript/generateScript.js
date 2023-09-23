@@ -23,18 +23,25 @@ function Main() {
     if (rotulo === "Criativo 1") {
       return(
         <>
-        <span className=" Sans'] text-[#5d5a88] font-['DM text-3xl font-bold leading">{rotulo}</span>
+        <span className=" Sans'] text-[#5d5a88] font-['DM text-3xl font-bold leading">Creativo</span>
         </>
       );
     }
     return (
       <div key={index}>
-        {rotulo && <p><strong className="inputBox">{rotulo}:</strong></p>}
-        <InputField
+
+        <div className='inputBox3-1'>
+          {rotulo && <p><strong >{rotulo}:</strong></p>}
+        </div>
+        
+        <div className='inputBox3-2'>
+          <InputField 
           label={rotulo ? "" : `Criativo selecionado:`}
           value={conteudo || parte}
           setValue={novaParte => atualizarParte(novaParte, index)}
-        />
+          />
+        </div>
+
       </div>
     );
   });
@@ -44,26 +51,39 @@ function Main() {
       <Header screen={2} />
   
       <div className="bodyCreative backgroundColor1">
-        <div className="creativeBox obc11">
-          <div>
+        <div className="creativeBox">
+          <div className='cb1' >
             {camposDeTexto}
             <ShowCreative creative={creative} setCreative={setCreative} hidden={true} />
+          </div>
+          <div className='cb2'>
             <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"} />
           </div>
           
         </div>
+
         <div id="icon" className="fontColor2">
             <FaArrowRight />
         </div>
-        <div className="creativeBox obc11" id="outputBoxCreative">
+
+        <div className="creativeBox" id="outputBoxCreative">
+
+          <h1 className='titleRoteiro'>
+            Roteiro
+          </h1>
+          
+          <div className='cb1 cb12'>
             <ShowScript text={script} />
-            
             <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
+          </div>
+
         </div>
       </div>
-      <div className=" footer fontColor4">
+
+      <div className="footer fontColor4">
         Copyright © 2023 | Todos os direitos reservados
       </div>
+
     </div>
   );
 }
@@ -79,7 +99,7 @@ function InputField({ label, value, setValue }) {
       {value === "Criativo 1" ? (
         <span className="inputBox">{value}</span>
       ) : (
-        <input className="input" value={value} onChange={handleChange} />
+        <input className="input3" value={value} onChange={handleChange} />
       )}
     </div>
   );
@@ -132,7 +152,7 @@ function ShowCreative({ creative, setCreative, hidden }) {
   }, [infos]);
 
   return (
-    <p className='showCreative' style={{ display: hidden ? 'none' : 'block' }} dangerouslySetInnerHTML={{ __html: creative }}></p>
+    <p className='' style={{ display: hidden ? 'none' : 'block' }} dangerouslySetInnerHTML={{ __html: creative }}></p>
   );
 }
 
@@ -156,9 +176,9 @@ function ShowScript({ text }) {
             );
           } else {
             return (
-              <div className="inputBox" key={index}>
+              <div className="inputBox2" key={index}>
                 <label className="title">{key}:</label>
-                {value && <p className="value input">{value}</p>}
+                {value && <p className="value input2">{value}</p>}
               </div>
             );
           }
