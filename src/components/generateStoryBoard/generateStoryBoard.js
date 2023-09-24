@@ -18,6 +18,7 @@ function Main() {
     const [generatedContent, setGeneratedContent] = useState(false)
 
     document.addEventListener("DOMContentLoaded", function() {
+        console.log(document.getElementById('tempText'));
         document.getElementById('hbp1').classList.remove('selectBorder');
         document.getElementById('hbp2').classList.add('selectBorder');
         document.getElementById('hbp3').classList.remove('selectBorder');
@@ -167,10 +168,13 @@ function ShowStoryBoard(props) {
         setModalOpen(true);
     };
 
+    // Verifica se a lista de URLs de imagem contém URLs válidos
+    const validUrls = props.text.split('<br><br>').filter(url => url.startsWith('http'));
+
     return (
         <div>
             <p className='showStoryBoard'>
-                {props.text.split('<br><br>').map((url, index) => (
+                {validUrls.map((url, index) => (
                     <img
                         key={index}
                         src={url}
@@ -181,13 +185,14 @@ function ShowStoryBoard(props) {
             </p>
             {modalOpen && (
                 <div className="modal">
-                    <span className="close" onClick={() => setModalOpen(false)}>&times;</span>
+                    <span className="close" onClick={() => setModalOpen(false)}>×</span>
                     <img className="modal-content" src={selectedImage} alt="Imagem" />
                 </div>
             )}
         </div>
     );
 }
+
 
 
 function ResultsPageButton(props) {
