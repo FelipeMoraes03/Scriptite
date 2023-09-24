@@ -56,10 +56,19 @@ function Main() {
         <div className="creativeBox">
           <div className='cb1' >
             {camposDeTexto}
-            <ShowCreative creative={creative} setCreative={setCreative} hidden={true} />
+            <ShowCreative
+              creative={creative}
+              setCreative={setCreative}
+              hidden={true} />
           </div>
           <div className='cb2'>
-            <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} setButton={setButtonGenerate} setContent={setGeneratedContent} text={buttonGenerate} />
+            <GenerateButton
+              input={creative}
+              setKeyWord={setCreative}
+              setScript={setScript}
+              setButton={setButtonGenerate}
+              setContent={setGeneratedContent}
+              text={buttonGenerate} />
           </div>
           
         </div>
@@ -76,7 +85,10 @@ function Main() {
             <div>
             </div>
           </div>
-          {generatedContent && <StoryBoardPageButton creative={creative} script={script} text={"Próxima etapa"}/>}
+          {generatedContent && <StoryBoardPageButton
+            creative={creative}
+            script={script}
+            text={"Próxima etapa"}/>}
         </div>
       </div>
 
@@ -155,7 +167,8 @@ function ShowCreative(props) {
   }, [infos]);
 
   return (
-    <p className='' style={{ display: props.hidden ? 'none' : 'block' }} dangerouslySetInnerHTML={{ __html: props.creative }}></p>
+    <p className='' style={{ display: props.hidden ? 'none' : 'block' }}
+      dangerouslySetInnerHTML={{ __html: props.creative }}></p>
   );
 }
 
@@ -173,7 +186,8 @@ function ShowScript(props) {
           
           if (key.localeCompare('Roteiro do criativo') === 0) {
             return (
-              <div id="identifierCreative" className="'Sans'] text-[#5d5a88] font-['DM text-3xl font-bold leading'" key={index}>
+              <div id="identifierCreative" className="'Sans']
+                text-[#5d5a88] font-['DM text-3xl font-bold leading'" key={index}>
                 <p className="title">{key}</p>
               </div>
             );

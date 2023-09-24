@@ -36,9 +36,21 @@ function Main() {
                         Roteiro
                     </h1>
 
-                    <ShowScript setCreative={setCreative} script={script} setScript={setScript}/>
+                    <ShowScript
+                        setCreative={setCreative}
+                        script={script}
+                        setScript={setScript}/>
 
-                    <GenerateButton input={script} urlImages={urlImages} setImagesUnit={setUrlImages} setImages={setConcatenatedImages} scenes={scenesPrompt} setScenes={setScenesPrompt} setButton={setButtonGenerate} setContent={setGeneratedContent} text={buttonGenerate}/>
+                    <GenerateButton
+                        input={script}
+                        urlImages={urlImages}
+                        setImagesUnit={setUrlImages}
+                        setImages={setConcatenatedImages}
+                        scenes={scenesPrompt}
+                        setScenes={setScenesPrompt}
+                        setButton={setButtonGenerate}
+                        setContent={setGeneratedContent}
+                        text={buttonGenerate}/>
 
                 </div>
                 <div className='icon'>
@@ -52,7 +64,11 @@ function Main() {
 
                     <ShowStoryBoard text={concatenatedImages}/>
                     <div id="obc21">
-                        {generatedContent && <ResultsPageButton creative={creative} script={script} storyBoard={concatenatedImages} text={"Próxima etapa"}/>}
+                        {generatedContent && <ResultsPageButton
+                            creative={creative}
+                            script={script}
+                            storyBoard={concatenatedImages}
+                            text={"Próxima etapa"}/>}
                     </div>
 
                     <div id="tempText">

@@ -107,7 +107,9 @@ function Main() {
             </div>
           </div>
           <div id="obc21">
-            {generatedContent && <ScriptPageButton creative={creative} text={'Próxima etapa'} />}
+            {generatedContent && <ScriptPageButton
+              creative={creative}
+              text={'Próxima etapa'} />}
           </div>
         </div>
       </div>
