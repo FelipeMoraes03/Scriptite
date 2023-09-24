@@ -68,7 +68,7 @@ function Main() {
                     </h1>
 
                     <ShowStoryBoard text={concatenatedImages}/>
-                    <div id="obc21">
+                    <div id="obc21" style={{ marginTop: '30px' }}>
                         {generatedContent && <ResultsPageButton
                             creative={creative}
                             script={script}
@@ -166,7 +166,6 @@ function ShowScript(props) {
 }
 
 function ShowStoryBoard(props) {
-
     const settings = {
         dots: true,
         infinite: true,
@@ -174,26 +173,23 @@ function ShowStoryBoard(props) {
         slidesToShow: 1,
         slidesToScroll: 1,
         centerMode: true,
-        
-        
     };
 
     const validUrls = props.text.split('<br><br>').filter(url => url.startsWith('http'));
 
     return (
-        <div className='boxScript' style={{ textAlign: 'center'}}>
+        <div className= "inputBox" style={{ textAlign: 'center'}}>
             <Slider {...settings}>
                 {validUrls.map((url, index) => (
                     <div key={index} onClick={() => (url)}>
                         <img src={url} alt={`Imagem ${index}`}  style={{ maxWidth: '90%', height: 'auto' }} />
-                        
                     </div>
                 ))}
             </Slider>
-            <button className='proximoEtapa'></button>
         </div>
     );
 }
+
 
 
 
