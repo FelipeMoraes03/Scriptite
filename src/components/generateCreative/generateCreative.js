@@ -11,6 +11,7 @@ const promptCreative = prompts[0]
 function Main() {
   const [keyWordInput, setKeyWordInput] = useState(['', '', '', '', '', '', '', '', ''])
   const [creative, setCreative] = useState('')
+  const [buttonGenerate, setButtonGenerate] = useState("Gerar criativo")
 
   return (
     <div>
@@ -86,7 +87,8 @@ function Main() {
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
               setCreative={setCreative}
-              text={'Gerar criativo'}
+              setButton={setButtonGenerate}
+              text={buttonGenerate}
             />
           </div>
         </div>
@@ -144,8 +146,8 @@ function KeyWord(props) {
 function GenerateButton(props) {
   let updatedCreative = ''
   async function generateCreativeClick() {
-    if (props.input.includes('')) {
-      alert('Todos os campos precisam ser preenchidos')
+    if (props.input[0] === "") {
+      alert('O nome do produto precisa ser especificado')
     } else {
       let box = document.getElementById('outputBoxCreative')
       box.classList.remove('obc1')
@@ -181,7 +183,8 @@ function GenerateButton(props) {
             props.setCreative(formattedCreative)
           }
         }
-      
+      props.setButton("Gerar Novamente")
+
       } catch (err) {
         console.error(err)
         alert(err)
@@ -198,19 +201,6 @@ function GenerateButton(props) {
     </generate>
   )
 }
-
-/*function ShowCreative(props) {
-  const creative = props.text
-
-  return (
-    <creative>
-      <p
-        className="showCreative"
-        dangerouslySetInnerHTML={{ __html: creative }}
-      ></p>
-    </creative>
-  )
-}*/
 
 function ShowCreative(props) {
   const creative = props.text

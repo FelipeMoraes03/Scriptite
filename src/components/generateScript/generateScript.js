@@ -11,6 +11,7 @@ const promptScript = prompts[1]
 function Main() {
   const [creative, setCreative] = useState("");
   const [script, setScript] = useState("");
+  const [buttonGenerate, setButtonGenerate] = useState("Gerar script")
 
   function atualizarParte(novaParte, index) {
     const novasPartes = [...creative.split('<br /><br />')];
@@ -23,7 +24,7 @@ function Main() {
     if (rotulo === "Criativo 1") {
       return(
         <>
-        <span className=" Sans'] text-[#5d5a88] font-['DM text-3xl font-bold leading">Creativo</span>
+        <span className=" Sans'] text-[#5d5a88] font-['DM text-3xl font-bold leading">Criativo</span>
         </>
       );
     }
@@ -57,7 +58,7 @@ function Main() {
             <ShowCreative creative={creative} setCreative={setCreative} hidden={true} />
           </div>
           <div className='cb2'>
-            <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} text={"GERAR SCRIPT"} />
+            <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} setButton={setButtonGenerate} text={buttonGenerate} />
           </div>
           
         </div>
@@ -67,16 +68,14 @@ function Main() {
         </div>
 
         <div className="creativeBox" id="outputBoxCreative">
-
-          <h1 className='titleRoteiro'>
-            Roteiro
-          </h1>
-          
           <div className='cb1 cb12'>
-            <ShowScript text={script} />
-            <StoryBoardPageButton creative={creative} script={script} text={"PRÓXIMO"}/>
+            <div>
+              <ShowScript text={script} />
+            </div>
+            <div>
+            </div>
           </div>
-
+          <StoryBoardPageButton creative={creative} script={script} text={"Próxima etapa"}/>
         </div>
       </div>
 
@@ -88,30 +87,30 @@ function Main() {
   );
 }
 
-function InputField({ label, value, setValue }) {
+function InputField(props) {
   const handleChange = (event) => {
-    setValue(event.target.value);
+    props.setValue(event.target.value);
   };
 
   return (
     <div className="inputBox">
-      <num>{label}</num>
-      {value === "Criativo 1" ? (
-        <span className="inputBox">{value}</span>
+      <num>{props.label}</num>
+      {props.value === "Criativo 1" ? (
+        <span className="inputBox">{props.value}</span>
       ) : (
-        <input className="input3" value={value} onChange={handleChange} />
+        <input className="input3" value={props.value} onChange={handleChange} />
       )}
     </div>
   );
 }
 
-function GenerateButton({ input, setScript, text }) {  
+function GenerateButton(props) {  
   let updatedScript = ""
   
   async function generateScriptClick() {
     try {
       let prompt = promptScript;
-      prompt = prompt + input;
+      prompt = prompt + props.input;
 
       const completion = await openai.chat.completions.create({
           model: "gpt-3.5-turbo",
@@ -122,12 +121,13 @@ function GenerateButton({ input, setScript, text }) {
       });
       
           for await (const chunk of completion) {
-          if (chunk.choices[0].delta.content) {
-              updatedScript = updatedScript + chunk.choices[0].delta.content
-              const formattedScript = updatedScript.replace(/\n/g, '<br />')
-              setScript(formattedScript)
+            if (chunk.choices[0].delta.content) {
+                updatedScript = updatedScript + chunk.choices[0].delta.content
+                const formattedScript = updatedScript.replace(/\n/g, '<br />')
+                props.setScript(formattedScript)
+            }
           }
-          }
+      props.setButton("Gerar Novamente")
 
     } catch (err) {
       console.error(err);
@@ -137,27 +137,27 @@ function GenerateButton({ input, setScript, text }) {
 
   return (
     <generate>
-      <button className='creaButton' onClick={generateScriptClick}>{text}</button>
+      <button className='creaButton' onClick={generateScriptClick}>{props.text}</button>
 
     </generate>
   );
 }
 
-function ShowCreative({ creative, setCreative, hidden }) {
+function ShowCreative(props) {
   const location = useLocation();
   const infos = location.state?.infos;
   
   React.useEffect(() => {
-    setCreative(infos[0]);
+    props.setCreative(infos[0]);
   }, [infos]);
 
   return (
-    <p className='' style={{ display: hidden ? 'none' : 'block' }} dangerouslySetInnerHTML={{ __html: creative }}></p>
+    <p className='' style={{ display: props.hidden ? 'none' : 'block' }} dangerouslySetInnerHTML={{ __html: props.creative }}></p>
   );
 }
 
-function ShowScript({ text }) {
-  const scriptLines = text.split('<br />');
+function ShowScript(props) {
+  const scriptLines = props.text.split('<br />');
   
   return (
     <div className="showCreative">
@@ -190,14 +190,14 @@ function ShowScript({ text }) {
   );
 }
 
-function StoryBoardPageButton({ creative, script, text }) {
+function StoryBoardPageButton(props) {
   const navigate = useNavigate();
-  const infos = [creative, script]
+  const infos = [props.creative, props.script]
 
   const handleStoryBoardPage = () => {
     navigate('/story-board', { state: { infos } });
   };
-  if (script === "") {
+  if (props.script === "") {
     return (
       <div id="text1" className='tex'>
         <FaHourglassStart />
@@ -205,10 +205,10 @@ function StoryBoardPageButton({ creative, script, text }) {
       </div>
     );
   }
-  if (script !== "") {
+  if (props.script !== "") {
     return (
       <next>
-        <button className='creaButton' onClick={handleStoryBoardPage}>{text}</button>
+        <button className='creaButton' onClick={handleStoryBoardPage}>{props.text}</button>
       </next>
     );
   }

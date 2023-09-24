@@ -14,6 +14,7 @@ function Main() {
     const [urlImages, setUrlImages] = useState([]);
     const [scenesPrompt, setScenesPrompt] = useState([]);
     const [concatenatedImages, setConcatenatedImages] = useState("");
+    const [buttonGenerate, setButtonGenerate] = useState("Gerar story board")
 
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('hbp1').classList.remove('selectBorder');
@@ -36,7 +37,7 @@ function Main() {
 
                     <ShowScript setCreative={setCreative} script={script} setScript={setScript}/>
 
-                    <GenerateButton input={script} urlImages={urlImages} setImagesUnit={setUrlImages} setImages={setConcatenatedImages} scenes={scenesPrompt} setScenes={setScenesPrompt} text={"Gerar storyboard"}/>
+                    <GenerateButton input={script} urlImages={urlImages} setImagesUnit={setUrlImages} setImages={setConcatenatedImages} scenes={scenesPrompt} setScenes={setScenesPrompt} setButton={setButtonGenerate} text={buttonGenerate}/>
 
                 </div>
                 <div className='icon'>
@@ -49,7 +50,7 @@ function Main() {
                     </h1>
 
                     <ShowStoryBoard text={concatenatedImages}/>
-                    <ResultsPageButton creative={creative} script={script} storyBoard={concatenatedImages} text={"Continuar"}/>
+                    <ResultsPageButton creative={creative} script={script} storyBoard={concatenatedImages} text={"Próxima etapa"}/>
 
                     <div id="tempText">
                         <FaHourglassStart />
@@ -105,7 +106,8 @@ function GenerateButton(props) {
                     props.setImagesUnit(updatedUrl);
                     props.setImages(updatedUrl.join('<br><br>'));
                 }
-              
+            props.setButton("Gerar Novamente")
+
         } catch (err) {
             console.error(err);
             alert(err);
