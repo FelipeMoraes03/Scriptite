@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 import './generateStoryBoard.css';
 import Header from '../header/header';
 import {FaArrowRight, FaHourglassStart} from 'react-icons/fa'
@@ -162,38 +166,36 @@ function ShowScript(props) {
 }
 
 function ShowStoryBoard(props) {
-    const [modalOpen, setModalOpen] = useState(false);
-    const [selectedImage, setSelectedImage] = useState('');
 
-    const handleImageClick = (url) => {
-        setSelectedImage(url);
-        setModalOpen(true);
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        centerMode: true,
+        
+        
     };
 
-    // Verifica se a lista de URLs de imagem contém URLs válidos
     const validUrls = props.text.split('<br><br>').filter(url => url.startsWith('http'));
 
     return (
-        <div>
-            <p className='showStoryBoard'>
+        <div className='boxScript' style={{ textAlign: 'center'}}>
+            <Slider {...settings}>
                 {validUrls.map((url, index) => (
-                    <img
-                        key={index}
-                        src={url}
-                        alt={`Imagem ${index}`}
-                        onClick={() => handleImageClick(url)}
-                    />
+                    <div key={index} onClick={() => (url)}>
+                        <img src={url} alt={`Imagem ${index}`}  style={{ maxWidth: '90%', height: 'auto' }} />
+                        
+                    </div>
                 ))}
-            </p>
-            {modalOpen && (
-                <div className="modal">
-                    <span className="close" onClick={() => setModalOpen(false)}>×</span>
-                    <img className="modal-content" src={selectedImage} alt="Imagem" />
-                </div>
-            )}
+            </Slider>
+            <button className='proximoEtapa'></button>
         </div>
     );
 }
+
+
 
 
 

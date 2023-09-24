@@ -95,3 +95,13 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.slick-slider {
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  .slick-slide img {
+    max-width: 100%;
+    height: auto;
+  }
