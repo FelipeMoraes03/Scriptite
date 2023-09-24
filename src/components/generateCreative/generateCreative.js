@@ -99,7 +99,7 @@ function Main() {
         </div>
         <div className="creativeBox obc1" id="outputBoxCreative">
           <div id="obc22">
-            <ShowCreative text={creative} />
+            <ShowCreative text={creative} setCreative={creative}/>
 
             <div id="text1">
               <FaHourglassStart />
@@ -241,6 +241,7 @@ function ShowCreative(props) {
     </creative>
   )
 }
+
 
 function ScriptPageButton(props) {
   const navigate = useNavigate();

@@ -190,11 +190,6 @@ function ShowStoryBoard(props) {
     );
 }
 
-
-
-
-
-
 function ResultsPageButton(props) {
     const navigate = useNavigate();
     const infos = [props.creative, props.script, props.storyBoard]

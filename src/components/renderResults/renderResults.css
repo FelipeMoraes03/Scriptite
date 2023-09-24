@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .renderBox{
     width: 73vw;
     height: 70vh;
@@ -10,4 +14,13 @@
     display: flex;
     flex-direction: column;
     padding-top: 3%;
+}
+
+.creativeBoxResult {
+    width: 60vw;
+    height: 78vh;
+    border-radius: 5px;
+    background-color: var(--color-2);
+    padding: 1.5vw;
+    padding-bottom: 0;
 }
