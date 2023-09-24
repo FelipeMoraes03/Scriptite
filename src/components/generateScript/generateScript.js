@@ -82,6 +82,10 @@ function Main() {
             <div>
               <ShowScript text={script} />
             </div>
+            <div id="tempText" style={{ marginTop: '200px' }}>
+                        <FaHourglassStart />
+                        Clique em gerar e aguarde.
+                    </div>
             <div>
             </div>
           </div>
@@ -90,6 +94,7 @@ function Main() {
             script={script}
             text={"Próxima etapa"}/>}
         </div>
+
       </div>
 
       <div className="footer fontColor4">
@@ -120,7 +125,12 @@ function InputField(props) {
 function GenerateButton(props) {  
   let updatedScript = ""
   
+  
   async function generateScriptClick() {
+
+    if (!props.content) {
+      document.getElementById('tempText').remove();
+  }
     try {
       props.setContent(false)
       let prompt = promptScript;

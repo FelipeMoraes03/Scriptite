@@ -76,7 +76,7 @@ function Main() {
                             text={"Próxima etapa"}/>}
                     </div>
 
-                    <div id="tempText">
+                    <div id="tempText" style={{ marginTop: '200px' }}>
                         <FaHourglassStart />
                         Clique em gerar e aguarde.
                     </div>
