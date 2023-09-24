@@ -12,6 +12,7 @@ function Main() {
   const [keyWordInput, setKeyWordInput] = useState(['', '', '', '', '', '', '', '', ''])
   const [creative, setCreative] = useState('')
   const [buttonGenerate, setButtonGenerate] = useState("Gerar criativo")
+  const [generatedContent, setGeneratedContent] = useState(false)
 
   return (
     <div>
@@ -88,6 +89,7 @@ function Main() {
               setKeyWord={setKeyWordInput}
               setCreative={setCreative}
               setButton={setButtonGenerate}
+              setContent={setGeneratedContent}
               text={buttonGenerate}
             />
           </div>
@@ -105,7 +107,7 @@ function Main() {
             </div>
           </div>
           <div id="obc21">
-            <ScriptPageButton creative={creative} text={'Próxima etapa'} />
+            {generatedContent && <ScriptPageButton creative={creative} text={'Próxima etapa'} />}
           </div>
         </div>
       </div>
@@ -157,6 +159,7 @@ function GenerateButton(props) {
       document.getElementById('obc22').classList.add('obc2-2')
 
       try {
+        props.setContent(false)
         let prompt = promptCreative;
         prompt = prompt + "- Nome do produto: " + props.input[0] + "\n";
         prompt = prompt + "- Nicho e Público-Alvo: " + props.input[1] + "\n";
@@ -184,6 +187,7 @@ function GenerateButton(props) {
           }
         }
       props.setButton("Gerar Novamente")
+      props.setContent(true)
 
       } catch (err) {
         console.error(err)

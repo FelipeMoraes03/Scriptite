@@ -15,6 +15,7 @@ function Main() {
     const [scenesPrompt, setScenesPrompt] = useState([]);
     const [concatenatedImages, setConcatenatedImages] = useState("");
     const [buttonGenerate, setButtonGenerate] = useState("Gerar story board")
+    const [generatedContent, setGeneratedContent] = useState(false)
 
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('hbp1').classList.remove('selectBorder');
@@ -37,7 +38,7 @@ function Main() {
 
                     <ShowScript setCreative={setCreative} script={script} setScript={setScript}/>
 
-                    <GenerateButton input={script} urlImages={urlImages} setImagesUnit={setUrlImages} setImages={setConcatenatedImages} scenes={scenesPrompt} setScenes={setScenesPrompt} setButton={setButtonGenerate} text={buttonGenerate}/>
+                    <GenerateButton input={script} urlImages={urlImages} setImagesUnit={setUrlImages} setImages={setConcatenatedImages} scenes={scenesPrompt} setScenes={setScenesPrompt} setButton={setButtonGenerate} setContent={setGeneratedContent} text={buttonGenerate}/>
 
                 </div>
                 <div className='icon'>
@@ -50,7 +51,9 @@ function Main() {
                     </h1>
 
                     <ShowStoryBoard text={concatenatedImages}/>
-                    <ResultsPageButton creative={creative} script={script} storyBoard={concatenatedImages} text={"Próxima etapa"}/>
+                    <div id="obc21">
+                        {generatedContent && <ResultsPageButton creative={creative} script={script} storyBoard={concatenatedImages} text={"Próxima etapa"}/>}
+                    </div>
 
                     <div id="tempText">
                         <FaHourglassStart />
@@ -75,37 +78,41 @@ function GenerateButton(props) {
 
         let updatedStoryBoard = ""
         try {
-                // GERA OS PROMPTS PARA SEREM PASSADOS PRO DALLE
-                let prompt = promptStoryBoard;
-                prompt = prompt + props.input;
+            props.setContent(false)
+            // GERA OS PROMPTS PARA SEREM PASSADOS PRO DALLE
+            let prompt = promptStoryBoard;
+            prompt = prompt + props.input;
 
-                const completion = await openai.chat.completions.create({
-                    model: "gpt-3.5-turbo",
-                    messages: [
-                    {"role": "user", "content": prompt}
-                    ],
-                    stream: true,
+            const completion = await openai.chat.completions.create({
+                model: "gpt-3.5-turbo",
+                messages: [
+                {"role": "user", "content": prompt}
+                ],
+                stream: true,
+            });
+            
+            for await (const chunk of completion) {
+                if (chunk.choices[0].delta.content) {
+                    updatedStoryBoard = updatedStoryBoard + chunk.choices[0].delta.content
+                    //props.setImages(updatedStoryBoard)
+                    props.setImages(updatedStoryBoard.split(/PROMPT SCENE /).filter(item => item.trim() !== "").join('<br><br>'))
+                }
+            }
+
+            let dallePrompts = updatedStoryBoard.split(/PROMPT SCENE /).filter(item => item.trim() !== "");
+            let updatedUrl = dallePrompts
+            props.setImages(updatedUrl.join('<br><br>'))
+            for (let index = 0; index < dallePrompts.length; index++) {
+                // CRIA AS IMAGENS A PARTIR DOS PROMPTS
+                const image = await openai.images.generate({
+                    prompt: dallePrompts[index]
                 });
-                
-                for await (const chunk of completion) {
-                    if (chunk.choices[0].delta.content) {
-                        updatedStoryBoard = updatedStoryBoard + chunk.choices[0].delta.content
-                        props.setImages(updatedStoryBoard.split(/PROMPT SCENE /).filter(item => item.trim() !== "").join('<br><br>'))
-                    }
-                }
-
-                let dallePrompts = updatedStoryBoard.split(/PROMPT SCENE /).filter(item => item.trim() !== "");
-                let updatedUrl = dallePrompts
-                props.setImages(updatedUrl.join('<br><br>'))
-                for (let index = 0; index < dallePrompts.length; index++) {
-                    // CRIA AS IMAGENS A PARTIR DOS PROMPTS
-                    const image = await openai.images.generate({
-                        prompt: dallePrompts[index]
-                    });
-                    updatedUrl[index] = image.data[0].url
-                    props.setImagesUnit(updatedUrl);
-                    props.setImages(updatedUrl.join('<br><br>'));
-                }
+                updatedUrl[index] = image.data[0].url
+                props.setImagesUnit(updatedUrl);
+                props.setImages(updatedUrl.join('<br><br>'));
+            }
+            
+            props.setContent(true)
             props.setButton("Gerar Novamente")
 
         } catch (err) {

@@ -115,6 +115,8 @@ PROMPT SCENE 2: "Rustic coffee shop interior, warm wooden decor, cozy corner wit
 
 PROMPT SCENE 3: "Close-up of optimistic shopkeeper's face, radiant smile, assured eyes, holding a tablet with Prepi app displayed, ambient lighting highlighting positive change. rough sketch art, storyboard style, minimalistic, colored."
 
+PROMPT CTA: "Close-up on the coffe"
+
 Com base na descrição a seguir:
 
 "`

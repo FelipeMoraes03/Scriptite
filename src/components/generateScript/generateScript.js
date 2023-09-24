@@ -12,6 +12,7 @@ function Main() {
   const [creative, setCreative] = useState("");
   const [script, setScript] = useState("");
   const [buttonGenerate, setButtonGenerate] = useState("Gerar script")
+  const [generatedContent, setGeneratedContent] = useState(false)
 
   function atualizarParte(novaParte, index) {
     const novasPartes = [...creative.split('<br /><br />')];
@@ -58,7 +59,7 @@ function Main() {
             <ShowCreative creative={creative} setCreative={setCreative} hidden={true} />
           </div>
           <div className='cb2'>
-            <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} setButton={setButtonGenerate} text={buttonGenerate} />
+            <GenerateButton input={creative} setKeyWord={setCreative} setScript={setScript} setButton={setButtonGenerate} setContent={setGeneratedContent} text={buttonGenerate} />
           </div>
           
         </div>
@@ -75,7 +76,7 @@ function Main() {
             <div>
             </div>
           </div>
-          <StoryBoardPageButton creative={creative} script={script} text={"Próxima etapa"}/>
+          {generatedContent && <StoryBoardPageButton creative={creative} script={script} text={"Próxima etapa"}/>}
         </div>
       </div>
 
@@ -109,6 +110,7 @@ function GenerateButton(props) {
   
   async function generateScriptClick() {
     try {
+      props.setContent(false)
       let prompt = promptScript;
       prompt = prompt + props.input;
 
@@ -128,6 +130,7 @@ function GenerateButton(props) {
             }
           }
       props.setButton("Gerar Novamente")
+      props.setContent(true)
 
     } catch (err) {
       console.error(err);
