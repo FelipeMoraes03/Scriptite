@@ -18,7 +18,6 @@ function Main() {
     const [generatedContent, setGeneratedContent] = useState(false)
 
     document.addEventListener("DOMContentLoaded", function() {
-        console.log(document.getElementById('tempText'));
         document.getElementById('hbp1').classList.remove('selectBorder');
         document.getElementById('hbp2').classList.add('selectBorder');
         document.getElementById('hbp3').classList.remove('selectBorder');
