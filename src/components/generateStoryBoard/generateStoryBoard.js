@@ -49,6 +49,7 @@ function Main() {
                         scenes={scenesPrompt}
                         setScenes={setScenesPrompt}
                         setButton={setButtonGenerate}
+                        content={generatedContent}
                         setContent={setGeneratedContent}
                         text={buttonGenerate}/>
 
@@ -90,7 +91,9 @@ function GenerateButton(props) {
 
     async function generateStoryBoardClick() {
 
-        document.getElementById('tempText').remove();
+        if (!props.content) {
+            document.getElementById('tempText').remove();
+        }
 
         let updatedStoryBoard = ""
         try {
