@@ -105,7 +105,6 @@ function GenerateButton(props) {
                     props.setImagesUnit(updatedUrl);
                     props.setImages(updatedUrl.join('<br><br>'));
                 }
-              
         } catch (err) {
             console.error(err);
             alert(err);
@@ -134,12 +133,36 @@ function ShowScript(props) {
 }
 
 function ShowStoryBoard(props) {
-    const script = props.text;
-    
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedImage, setSelectedImage] = useState('');
+
+    const handleImageClick = (url) => {
+        setSelectedImage(url);
+        setModalOpen(true);
+    };
+
     return (
-        <p className='showStoryBoard' dangerouslySetInnerHTML={{ __html: script }}></p>
+        <div>
+            <p className='showStoryBoard'>
+                {props.text.split('<br><br>').map((url, index) => (
+                    <img
+                        key={index}
+                        src={url}
+                        alt={`Imagem ${index}`}
+                        onClick={() => handleImageClick(url)}
+                    />
+                ))}
+            </p>
+            {modalOpen && (
+                <div className="modal">
+                    <span className="close" onClick={() => setModalOpen(false)}>&times;</span>
+                    <img className="modal-content" src={selectedImage} alt="Imagem" />
+                </div>
+            )}
+        </div>
     );
 }
+
 
 function ResultsPageButton(props) {
     const navigate = useNavigate();
