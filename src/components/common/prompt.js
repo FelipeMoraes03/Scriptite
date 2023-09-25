@@ -98,15 +98,17 @@ Com base no texto a seguir:
 
 "`
 
-const promptStoryBoard = `"PARA CADA CENA DADA NA DESCRIÇÃO
+const promptStoryBoard = `PARA CADA CENA DADA NA DESCRIÇÃO
 
-Crie um Dall-E prompt com vários adjetivos. 
+Crie um Dall-E prompt bastante detalhado, deixando claro o que deve haver em cada cena, com vários adjetivos. 
 
 No final de cada prompt sempre deixe o texto “rough sketch art, storyboard style, minimalistic, colored”.
 
 Escreva tudo em inglês.
 
 Não escreva frases nem “vozes” nem “falas” no prompt.
+Evite qualquer parte que remeta à palavras.
+Todos os prompts não mantém informações anteriores, então deixe bastante claro o que deve conter em cada prompt.
 
 Siga o formato do exemplo abaixo:
 PROMPT SCENE 1: "Cluttered fashion store interior, messy stacks of clothes, dim lighting, barren cash register, distraught and burdened store owner examining dismal sales on a smartphone, rough sketch art, storyboard style, minimalistic."
@@ -115,11 +117,11 @@ PROMPT SCENE 2: "Rustic coffee shop interior, warm wooden decor, cozy corner wit
 
 PROMPT SCENE 3: "Close-up of optimistic shopkeeper's face, radiant smile, assured eyes, holding a tablet with Prepi app displayed, ambient lighting highlighting positive change. rough sketch art, storyboard style, minimalistic, colored."
 
-PROMPT CTA: "Close-up on the coffe"
+PROMPT CTA: "Close-up view of a steaming cup of coffee, inviting the viewer to take action, minimalistic yet enticing, urging engagement, rough sketch art, storyboard style, minimalistic, colored."
 
 Com base na descrição a seguir:
 
-"`
+`
 
 const prompts = [promptCreative, promptScript, promptStoryBoard];
 export default prompts;
