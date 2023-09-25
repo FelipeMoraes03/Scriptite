@@ -94,9 +94,7 @@ function ShowScript(props) {
     const scriptLines = props.script.split('<br />');
     
     return (
-      <div>
-        {/* falta descobrir como aumentar esse valor input */}
-      {/* </div><div className="valor input"> */}
+      <div className="valor input">
         {scriptLines.map((line, index) => {
           const colonIndex = line.indexOf(':');
           
