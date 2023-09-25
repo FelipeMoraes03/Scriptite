@@ -14,11 +14,25 @@ function Main() {
   const [buttonGenerate, setButtonGenerate] = useState("Gerar script")
   const [generatedContent, setGeneratedContent] = useState(false)
   const [firstContent, setFirstContent] = useState(true)
+  const [campos, setCampos] = useState([
+    { rotulo: "Nome:", conteudo: "" },
+    { rotulo: "Categoria:", conteudo: "" },
+    { rotulo: "Sentimento:", conteudo: "" },
+    { rotulo: "Formato:", conteudo: "" },
+    { rotulo: "Headline:", conteudo: "" },
+    { rotulo: "Ideia:", conteudo: "" },
+    { rotulo: "CTA:", conteudo: "" },
+    { rotulo: "Produto:", conteudo: "" },
+    { rotulo: "Tempo de duração do vídeo:", conteudo: "" }
+  ]);
 
-  function atualizarParte(novaParte, index) {
-    const novasPartes = [...creative.split('<br /><br />')];
-    novasPartes[index] = novaParte;
-    setCreative(novasPartes.join('<br /><br />'));
+
+function atualizarParte(novoConteudo, index) {
+    setCampos(prevCampos => {
+      const novosCampos = [...prevCampos];
+      novosCampos[index].conteudo = novoConteudo;
+      return novosCampos;
+    });
   }
 
   const camposDeTexto = creative.split('<br /><br />').map((parte, index) => {
@@ -115,7 +129,7 @@ function InputField(props) {
 
   return (
     <div className="inputBox">
-      <num>{props.label}</num>
+      <p>{props.label}</p>
       {props.value === "Criativo 1" ? (
         <span className="inputBox">{props.value}</span>
       ) : (
@@ -124,6 +138,7 @@ function InputField(props) {
     </div>
   );
 }
+
 
 function GenerateButton(props) {  
   let updatedScript = ""
