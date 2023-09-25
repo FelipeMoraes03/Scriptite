@@ -26,63 +26,63 @@ function Main() {
               numInput={1}
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
-              placeholderInput={'Informe aqui'}
+              placeholderInput={'Informe aqui (obrigatório)'}
               description={'Qual o nome do seu produto?'}
             />
             <KeyWord
               numInput={2}
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
-              placeholderInput={'Informe aqui'}
+              placeholderInput={'Informe aqui (opcional)'}
               description={'Qual o seu nicho/público-alvo?'}
             />
             <KeyWord
               numInput={3}
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
-              placeholderInput={'Informe aqui'}
+              placeholderInput={'Informe aqui (opcional)'}
               description={'Quais as dores do seu público?'}
             />
             <KeyWord
               numInput={4}
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
-              placeholderInput={'Informe aqui'}
+              placeholderInput={'Informe aqui (opcional)'}
               description={'Quais as necessidades/desejos do seu público?'}
             />
             <KeyWord
               numInput={5}
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
-              placeholderInput={'Informe aqui'}
+              placeholderInput={'Informe aqui (opcional)'}
               description={'Como o seu produto atua na resolução dessas dores?'}
             />
             <KeyWord
               numInput={6}
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
-              placeholderInput={'Informe aqui'}
+              placeholderInput={'Informe aqui (opcional)'}
               description={'Qual o formato do seu produto?'}
             />
             <KeyWord
               numInput={7}
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
-              placeholderInput={'Informe aqui'}
+              placeholderInput={'Informe aqui (opcional)'}
               description={'Qual o diferencial do seu produto?'}
             />
             <KeyWord
               numInput={8}
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
-              placeholderInput={'Informe aqui'}
+              placeholderInput={'Informe aqui (opcional)'}
               description={'Quais os objetivos do anúncio?'}
             />
             <KeyWord
               numInput={9}
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
-              placeholderInput={'Informe aqui'}
+              placeholderInput={'Informe aqui (opcional)'}
               description={'Qual o preço da oferta do seu produto?'}
             />
             {firstContent && <GenerateButton
