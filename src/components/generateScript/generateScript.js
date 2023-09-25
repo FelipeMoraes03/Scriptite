@@ -67,6 +67,7 @@ function Main() {
               setKeyWord={setCreative}
               setScript={setScript}
               setButton={setButtonGenerate}
+              content={generatedContent}
               setContent={setGeneratedContent}
               text={buttonGenerate} />
           </div>
