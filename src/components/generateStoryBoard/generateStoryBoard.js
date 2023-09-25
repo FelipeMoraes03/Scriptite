@@ -162,7 +162,7 @@ function ShowScript(props) {
     }, [script, props]);
 
     return (
-        <div className="showCreative cb1">
+        <div className="showScript ">
             {script.split('<br />').map((line, index) => {
                 const colonIndex = line.indexOf(':');
 
