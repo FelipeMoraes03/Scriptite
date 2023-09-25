@@ -56,7 +56,6 @@ function Main() {
                         content={generatedContent}
                         setContent={setGeneratedContent}
                         text={buttonGenerate}/>
-
                 </div>
                 <div className='icon'>
                    <FaArrowRight />
@@ -158,8 +157,9 @@ function ShowScript(props) {
     const script = infos[1];
     
     useEffect(() => {
-        props.setScript(script);
-    }, [script, props]);
+        props.setCreative(infos[0])
+        props.setScript(infos[1]);
+    }, [props]);
 
     return (
         <div className="showScript ">
