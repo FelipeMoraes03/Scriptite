@@ -153,15 +153,43 @@ function GenerateButton(props) {
 }
 
 function ShowScript(props) {
-    const location = useLocation()
-    const infos = location.state?.infos
-    const script = infos[1]
-    const creative = infos[0]
-    props.setScript(script)
-    props.setCreative(creative)
+    const location = useLocation();
+    const infos = location.state?.infos;
+    const script = infos[1];
+    
+    useEffect(() => {
+        props.setScript(script);
+    }, [script, props]);
 
     return (
-        <p className='showScript' dangerouslySetInnerHTML={{ __html: script }}></p>
+        <div className="showCreative cb1">
+            {script.split('<br />').map((line, index) => {
+                const colonIndex = line.indexOf(':');
+
+                if (colonIndex !== -1) {
+                    const key = line.slice(0, colonIndex);
+                    const value = line.slice(colonIndex + 1).trim();
+
+                    if (key.localeCompare('Roteiro do criativo') === 0) {
+                        return (
+                            <div id="identifierCreative" className="'Sans']
+                                text-[#5d5a88] font-['DM text-3xl font-bold leading'" key={index}>
+                                <p className="title">{key}</p>
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div className="inputBox2" key={index}>
+                                <label className="title">{key}:</label>
+                                {value && <p className="value input2">{value}</p>}
+                            </div>
+                        );
+                    }
+                }
+
+                return null;
+            })}
+        </div>
     );
 }
 

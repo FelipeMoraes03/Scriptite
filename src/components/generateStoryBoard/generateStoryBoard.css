@@ -105,3 +105,11 @@
     max-width: 100%;
     height: auto;
   }
+
+.cb1 {
+
+    overflow-y: scroll;
+    text-align: center;
+    height: 90%;
+    width: 100%;
+  }
