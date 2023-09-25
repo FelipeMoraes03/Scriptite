@@ -13,6 +13,7 @@ function Main() {
   const [script, setScript] = useState("");
   const [buttonGenerate, setButtonGenerate] = useState("Gerar script")
   const [generatedContent, setGeneratedContent] = useState(false)
+  const [firstContent, setFirstContent] = useState(true)
 
   function atualizarParte(novaParte, index) {
     const novasPartes = [...creative.split('<br /><br />')];
@@ -62,14 +63,15 @@ function Main() {
               hidden={true} />
           </div>
           <div className='cb2'>
-            <GenerateButton
+          {firstContent && <GenerateButton
               input={creative}
               setKeyWord={setCreative}
               setScript={setScript}
               setButton={setButtonGenerate}
               content={generatedContent}
               setContent={setGeneratedContent}
-              text={buttonGenerate} />
+              setFirstContent={setFirstContent}
+              text={buttonGenerate} />}
           </div>
           
         </div>
@@ -133,6 +135,7 @@ function GenerateButton(props) {
       document.getElementById('tempText').remove();
   }
     try {
+      props.setFirstContent(false)
       props.setContent(false)
       let prompt = promptScript;
       prompt = prompt + props.input;
@@ -154,8 +157,10 @@ function GenerateButton(props) {
           }
       props.setButton("Gerar Novamente")
       props.setContent(true)
+      props.setFirstContent(true)
 
     } catch (err) {
+      props.setFirstContent(true)
       console.error(err);
       alert(err);
     }
