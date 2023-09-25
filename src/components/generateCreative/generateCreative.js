@@ -13,6 +13,7 @@ function Main() {
   const [creative, setCreative] = useState('')
   const [buttonGenerate, setButtonGenerate] = useState("Gerar criativo")
   const [generatedContent, setGeneratedContent] = useState(false)
+  const [firstContent, setFirstContent] = useState(true)
 
   return (
     <div>
@@ -84,14 +85,15 @@ function Main() {
               placeholderInput={'Informe aqui'}
               description={'Qual o preço da oferta do seu produto?'}
             />
-            <GenerateButton
+            {firstContent && <GenerateButton
               input={keyWordInput}
               setKeyWord={setKeyWordInput}
               setCreative={setCreative}
               setButton={setButtonGenerate}
               setContent={setGeneratedContent}
+              setFirstContent={setFirstContent}
               text={buttonGenerate}
-            />
+            />}
           </div>
         </div>
         <div  className="icon fontColor2">
@@ -161,6 +163,7 @@ function GenerateButton(props) {
       document.getElementById('obc22').classList.add('obc2-2')
 
       try {
+        props.setFirstContent(false)
         props.setContent(false)
         let prompt = promptCreative;
         prompt = prompt + "- Nome do produto: " + props.input[0] + "\n";
@@ -190,8 +193,10 @@ function GenerateButton(props) {
         }
       props.setButton("Gerar Novamente")
       props.setContent(true)
+      props.setFirstContent(true)
 
       } catch (err) {
+        props.setFirstContent(true)
         console.error(err)
         alert(err)
       }
