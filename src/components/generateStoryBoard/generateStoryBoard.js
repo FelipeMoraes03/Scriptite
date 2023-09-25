@@ -20,6 +20,7 @@ function Main() {
     const [concatenatedImages, setConcatenatedImages] = useState("");
     const [buttonGenerate, setButtonGenerate] = useState("Gerar story board")
     const [generatedContent, setGeneratedContent] = useState(false)
+    const [firstContent, setFirstContent] = useState(true)
 
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('hbp1').classList.remove('selectBorder');
@@ -45,7 +46,7 @@ function Main() {
                         script={script}
                         setScript={setScript}/>
 
-                    <GenerateButton
+                    {firstContent && <GenerateButton
                         input={script}
                         urlImages={urlImages}
                         setImagesUnit={setUrlImages}
@@ -55,7 +56,8 @@ function Main() {
                         setButton={setButtonGenerate}
                         content={generatedContent}
                         setContent={setGeneratedContent}
-                        text={buttonGenerate}/>
+                        setFirstContent={setFirstContent}
+                        text={buttonGenerate}/>}
                 </div>
                 <div className='icon'>
                    <FaArrowRight />
@@ -100,6 +102,7 @@ function GenerateButton(props) {
 
         let updatedStoryBoard = ""
         try {
+            props.setFirstContent(false)
             props.setContent(false)
             // GERA OS PROMPTS PARA SEREM PASSADOS PRO DALLE
             let prompt = promptStoryBoard;
@@ -134,10 +137,12 @@ function GenerateButton(props) {
                 props.setImages(updatedUrl.join('<br><br>'));
             }
             
+            props.setFirstContent(true)
             props.setContent(true)
             props.setButton("Gerar Novamente")
 
         } catch (err) {
+            props.setFirstContent(true)
             console.error(err);
             alert(err);
         }
@@ -196,7 +201,7 @@ function ShowScript(props) {
 function ShowStoryBoard(props) {
     const settings = {
         dots: true,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
