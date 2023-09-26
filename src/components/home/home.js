@@ -8,7 +8,7 @@ import img1 from './img1.png';
 function Home() {
 
     const handleClick = () => {
-        let key = prompt("Por favor, insira a chave da API");
+        let key = prompt("Por favor, insira a chave da API Openai Exemplo(sk-b3xXS...WYjR):");
         if (key) {
             localStorage.setItem('api', key);
             console.log(localStorage.getItem('api'))
