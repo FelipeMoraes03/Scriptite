@@ -6,6 +6,13 @@ import Header from '../header/header';
 import img1 from './img1.png';
 
 function Home() {
+// o arquivo .env REACT_APP_OPENAI_API_KEY="openai"
+    const handleClick = () => {
+        let key = prompt("Por favor, insira a chave Openai");
+        if (key) {
+            localStorage.setItem('REACT_APP_OPENAI_API_KEY', key);
+        }
+    }
 
     return (
         <div>
@@ -20,7 +27,7 @@ function Home() {
                 </div>
                 <div className="">
                     <Link to={`/creative`}>
-                        <button className=''>Iniciar</button>  
+                        <button className='' onClick={handleClick}>Iniciar</button>  
                     </Link>
                 </div>
 
@@ -39,7 +46,7 @@ function Home() {
                         </div>
                         <div>
                             <Link to={`/creative`}>
-                                <button className=''>Iniciar</button>  
+                                <button className='' onClick={handleClick}>Iniciar</button>  
                             </Link>
                         </div>
 
