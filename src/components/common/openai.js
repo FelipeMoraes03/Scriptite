@@ -7,4 +7,3 @@ const openai = new OpenAI({
 
 export default openai;
 
-//.env  REACT_APP_OPENAI_API_KEY="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"
