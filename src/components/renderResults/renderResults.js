@@ -49,7 +49,7 @@ function Main() {
             <div className='bodyCreative backgroundColor1 renderBody'>
                 <div className="creativeBoxResult">
                     <h1 class="text-center text-xl mb-5">STORY BOARD</h1>
-                    <div className='cb1' >
+                    <div>
                         <ShowStoryBoard storyBoard={storyBoard}/>
                     </div>
                 </div>
@@ -94,7 +94,7 @@ function ShowScript(props) {
     const scriptLines = props.script.split('<br />');
     
     return (
-      <div className="showScript">
+      <div className="valor input">
         {scriptLines.map((line, index) => {
           const colonIndex = line.indexOf(':');
           

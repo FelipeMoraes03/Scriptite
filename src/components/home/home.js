@@ -7,6 +7,14 @@ import img1 from './img1.png';
 
 function Home() {
 
+    const handleClick = () => {
+        let key = prompt("Por favor, insira a chave da API Openai Exemplo(sk-b3xXS...WYjR):");
+        if (key) {
+            localStorage.setItem('api', key);
+            console.log(localStorage.getItem('api'))
+        }
+    }
+
     return (
         <div>
             <header className="headerHome">
@@ -20,7 +28,7 @@ function Home() {
                 </div>
                 <div className="">
                     <Link to={`/creative`}>
-                        <button className=''>Iniciar</button>  
+                        <button className='' onClick={handleClick}>Iniciar</button>  
                     </Link>
                 </div>
 
@@ -39,7 +47,7 @@ function Home() {
                         </div>
                         <div>
                             <Link to={`/creative`}>
-                                <button className=''>Iniciar</button>  
+                                <button className='' onClick={handleClick}>Iniciar</button>  
                             </Link>
                         </div>
 
